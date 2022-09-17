@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import {
   chakra,
@@ -17,6 +17,7 @@ import {
   Input,
   Avatar,
 } from '@chakra-ui/react'
+import netlifyIdentityWidget from 'netlify-identity-widget'
 import {
   AiOutlineMenu,
   AiFillHome,
@@ -27,6 +28,8 @@ import {
 } from 'react-icons/ai'
 import { BsFillCameraVideoFill } from 'react-icons/bs'
 
+import { useAuth } from '@redwoodjs/auth'
+
 type MainLayoutProps = {
   children?: React.ReactNode
 }
@@ -34,6 +37,12 @@ type MainLayoutProps = {
 export default function MainLayout({ children }: MainLayoutProps) {
   const bg = useColorModeValue('white', 'gray.800')
   const mobileNav = useDisclosure()
+
+  const { currentUser } = useAuth()
+  useEffect(() => {
+    netlifyIdentityWidget.open('login')
+    setTimeout(() => console.log(currentUser), 1000 * 5)
+  }, [])
 
   return (
     <React.Fragment>
@@ -104,7 +113,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
               alignItems="center"
             >
               <AiFillAlipayCircle />
-              <VisuallyHidden>Choc</VisuallyHidden>
+              <VisuallyHidden>Canvas Design Editor</VisuallyHidden>
             </chakra.a>
 
             <HStack spacing={3} display={{ base: 'none', md: 'inline-flex' }}>
@@ -154,11 +163,12 @@ export default function MainLayout({ children }: MainLayoutProps) {
             <Avatar
               size="sm"
               name="Dan Abrahmov"
-              src="https://bit.ly/dan-abramov"
+              src="public/defaults/user-icon.png"
             />
           </HStack>
         </Flex>
       </chakra.header>
+      {children}
     </React.Fragment>
   )
 }

@@ -7210,6 +7210,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/netlify-identity-widget@npm:^1.9.3":
+  version: 1.9.3
+  resolution: "@types/netlify-identity-widget@npm:1.9.3"
+  checksum: 921f5439c3b8fa0fb27058be39f5c6e965ee69a82484a55d3ccb247f6849fd0b4e8170a42e45667bc64869e1ec46d8a2577e63689c949c3fbdb7f67199dfcb86
+  languageName: node
+  linkType: hard
+
 "@types/node-fetch@npm:^2.5.7":
   version: 2.6.2
   resolution: "@types/node-fetch@npm:2.6.2"
@@ -18719,6 +18726,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"netlify-identity-widget@npm:^1.9.2":
+  version: 1.9.2
+  resolution: "netlify-identity-widget@npm:1.9.2"
+  checksum: fcdc960f3228cdb4c1e6a1c98ca92f570d00d7914d9579712a16ef7ec72fe6d4396fbe07b24e9f9ca2fc12fd724d3193a40d97ed99c7690f209f329ae591af24
+  languageName: node
+  linkType: hard
+
 "new-github-issue-url@npm:0.2.1":
   version: 0.2.1
   resolution: "new-github-issue-url@npm:0.2.1"
@@ -21915,6 +21929,7 @@ __metadata:
   resolution: "root-workspace-0b6124@workspace:."
   dependencies:
     "@redwoodjs/core": 3.0.1
+    "@types/netlify-identity-widget": ^1.9.3
   languageName: unknown
   linkType: soft
 
@@ -24989,10 +25004,12 @@ __metadata:
     "@chakra-ui/react": ^1
     "@emotion/react": ^11
     "@emotion/styled": ^11
+    "@redwoodjs/auth": 3.0.1
     "@redwoodjs/forms": 3.0.1
     "@redwoodjs/router": 3.0.1
     "@redwoodjs/web": 3.0.1
     framer-motion: ^6
+    netlify-identity-widget: ^1.9.2
     prop-types: 15.8.1
     react: 17.0.2
     react-dom: 17.0.2
