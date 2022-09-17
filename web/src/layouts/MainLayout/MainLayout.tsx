@@ -16,6 +16,7 @@ import {
   InputLeftElement,
   Input,
   Avatar,
+  Center,
 } from '@chakra-ui/react'
 import netlifyIdentityWidget from 'netlify-identity-widget'
 import {
@@ -29,6 +30,8 @@ import {
 import { BsFillCameraVideoFill } from 'react-icons/bs'
 
 import { useAuth } from '@redwoodjs/auth'
+
+import CreateProjectModal from 'src/components/CreateProjectModal/CreateProjectModal'
 
 type MainLayoutProps = {
   children?: React.ReactNode
@@ -142,29 +145,14 @@ export default function MainLayout({ children }: MainLayoutProps) {
             display={mobileNav.isOpen ? 'none' : 'flex'}
             alignItems="center"
           >
-            <InputGroup>
-              <InputLeftElement pointerEvents="none">
-                <AiOutlineSearch />
-              </InputLeftElement>
-              <Input type="tel" placeholder="Search..." />
-            </InputGroup>
-
-            <chakra.a
-              p={3}
-              color="gray.800"
-              _dark={{ color: 'inherit' }}
-              rounded="sm"
-              _hover={{ color: 'gray.800', _dark: { color: 'gray.600' } }}
-            >
-              <AiFillBell />
-              <VisuallyHidden>Notifications</VisuallyHidden>
-            </chakra.a>
-
-            <Avatar
-              size="sm"
-              name="Dan Abrahmov"
-              src="public/defaults/user-icon.png"
-            />
+            <CreateProjectModal />
+            <Center>
+              <Avatar
+                size="sm"
+                name="Dan Abrahmov"
+                src="public/defaults/user-icon.png"
+              />
+            </Center>
           </HStack>
         </Flex>
       </chakra.header>
