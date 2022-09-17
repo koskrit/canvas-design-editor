@@ -1,3 +1,15 @@
 import type { Project } from 'src/contexts/currentProject'
 
-export function createNewProject(data: Project, setCurrentUser: any) {}
+const generateNewProjectString = (projectData: Project) => `
+`
+
+export default function createNewProject(
+  projectData: Project,
+  setCurrentUser: any,
+  apolloClient: any
+) {
+  setCurrentUser(data)
+  apolloClient.mutate({
+    mutation: CHANGE_GRAPHQL,
+  })
+}
