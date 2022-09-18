@@ -27,6 +27,7 @@ import { BsFillCameraVideoFill } from 'react-icons/bs'
 import { useAuth } from '@redwoodjs/auth'
 
 import CreateProjectModal from 'src/components/CreateProjectModal/CreateProjectModal'
+import useNetlifyWidget from 'src/plugins/netlifyAuth'
 
 type MainLayoutProps = {
   children?: React.ReactNode
@@ -36,11 +37,10 @@ export default function MainLayout({ children }: MainLayoutProps) {
   const bg = useColorModeValue('white', 'gray.800')
   const mobileNav = useDisclosure()
 
-  const { currentUser } = useAuth()
+  const netlifyIdentityWidget = useNetlifyWidget()
+
   useEffect(() => {
     netlifyIdentityWidget.open('login')
-    netlifyIdentityWidget.on('login', (e) => console.log(e))
-    setTimeout(() => console.log(currentUser), 1000 * 5)
   }, [])
 
   return (

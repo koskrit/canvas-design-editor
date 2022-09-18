@@ -1,28 +1,37 @@
-import { useApolloClient } from '@apollo/client'
+import { useApolloClient, gql } from '@apollo/client'
 
 import { useGlobalState } from 'src/contexts/initialization'
 import type { User } from 'src/contexts/user'
 
-const generateGraphQLString = (userData: User) => `
-
-mutation {
-  createUser(input :{
-  Id: "${userData.id}"
-  Name: "${userData.name}"
-  ProfilePhoto: "${userData.photo}"
-  Email:"${userData.email}"
-  Slug: "${userData.id}"
-  }){
-  Email
-  Id
-  Name
-  CreatedDate
-  ModifiedDate
-  Slug
-  ProfilePhoto
-  Project
-}
-}
+const graphQLString = gql`
+  mutation (
+    $Id: String!
+    $Name: String!
+    $ProfilePhoto: String!
+    $Email: String!
+    $Slug: String!
+  ) {
+    createUser(
+      input: {
+        Id: $Id
+        Name: $Name
+        ProfilePhoto: $ProfilePhoto
+        Email: $Email
+        Slug: $Slug
+      }
+    ) {
+      Email
+      Id
+      Name
+      CreatedDate
+      ModifiedDate
+      Slug
+      ProfilePhoto
+      Project {
+        Id
+      }
+    }
+  }
 `
 
 export default function useCreateNewUser(userData: User) {
@@ -31,6 +40,7 @@ export default function useCreateNewUser(userData: User) {
 
   setCurrentUser(userData)
   apolloClient.mutate({
-    mutation: generateGraphQLString(userData),
+    mutation: graphQLString,
+    variables: {},
   })
 }

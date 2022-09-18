@@ -1,48 +1,78 @@
 import { useApolloClient } from '@apollo/client'
+import { gql } from '@apollo/client'
 import { v4 as uuv4 } from 'uuid'
+
+import { navigate, routes } from '@redwoodjs/router'
 
 import type { Project } from 'src/contexts/currentProject'
 import useGlobalState from 'src/contexts/initialization'
 
-const generateNewProjectString = (projectData: Project) => `
-
-mutation {
-  createProject(input:{
-    Id:"${projectData.Id}"
-    userId:"${projectData.userId}"
-    Name:"${projectData.Name}"
-    PreviewImage:"${projectData.PreviewImage}"
-    Height:"${projectData.Height}"
-    Width:"${projectData.Width}"
-    BackgroundColor:"${projectData.BackgroundColor}"
-    Slug:"${projectData.Id}"
-    Serialization: "${projectData.Serialization}"
-
-  }){
-  userId
-  Id
-  Creator
-  userId
-  Name
-  PreviewImage
-  Height
-  Width
-  BackgroundColor
-  Slug
-  Serialization
-}
-}
-
+const graphQLString = gql`
+  mutation (
+    $Id: String!
+    $userId: String!
+    $Name: String!
+    $PreviewImage: String!
+    $Height: Int!
+    $Width: Int!
+    $BackgroundColor: String!
+    $Slug: String!
+    $Serialization: String!
+  ) {
+    createProject(
+      input: {
+        Id: $Id
+        userId: $userId
+        Name: $Name
+        PreviewImage: $PreviewImage
+        Height: $Height
+        Width: $Width
+        BackgroundColor: $BackgroundColor
+        Slug: $Slug
+        Serialization: $Serialization
+      }
+    ) {
+      Id
+      userId
+      Name
+      PreviewImage
+      Height
+      Width
+      BackgroundColor
+      Slug
+      Serialization
+    }
+  }
 `
 
-export default function useCreateNewProject(projectData: Project) {
+export default function useCreateNewProject() {
   const [currentProject, setCurrentProject] = useGlobalState('currentProject')
+  const [currentUser, setCurrentUser] = useGlobalState('user')
+
   const apolloClient = useApolloClient()
 
-  projectData.Id = uuv4()
-  setCurrentProject(projectData)
+  return async (projectData: Project) => {
+    projectData = fillEmptyFields(projectData)
+    setCurrentProject(projectData)
 
-  apolloClient.mutate({
-    mutation: generateNewProjectString(projectData),
-  })
+    await apolloClient.mutate({
+      mutation: graphQLString,
+      variables: { ...projectData },
+    })
+
+    navigate(routes.project({ id: projectData.Id }))
+  }
+
+  function fillEmptyFields(projectData: Project) {
+    projectData.Id = projectData.Id || uuv4()
+    projectData.Name = projectData.Name || `project-${projectData.Id}`
+    projectData.Slug = projectData.Slug || projectData.Id
+    projectData.userId = projectData.userId || currentUser.id
+    projectData.BackgroundColor = projectData.BackgroundColor || '#000'
+    projectData.Height = projectData.Height || 1000
+    projectData.Width = projectData.Width || 1000
+    projectData.Serialization = projectData.Serialization || 'serialization'
+
+    return projectData
+  }
 }

@@ -1,3 +1,5 @@
+import { useRef } from 'react'
+
 import {
   Button,
   HStack,
@@ -13,8 +15,33 @@ import {
   useDisclosure,
 } from '@chakra-ui/react'
 
+import useCreateNewProject from 'src/workflows/useCreateNewProject'
+
 const CreateProjectModal = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const heightRef = useRef()
+  const widthRef = useRef()
+  const nameRef = useRef()
+
+  const createNewProject = useCreateNewProject()
+
+  // try to find a way to maximize simplicity and cleaness for workflow hooks
+
+  // try the createNewProject workflow
+  const handleProjectSubmit = () => {
+    onClose()
+    createNewProject({
+      Name: nameRef.current.value,
+      Width: widthRef.current.value,
+      Height: heightRef.current.value,
+      Id: '',
+      userId: '',
+      PreviewImage: '',
+      BackgroundColor: '',
+      Slug: '',
+      Serialization: '',
+    })
+  }
 
   return (
     <>
@@ -27,11 +54,11 @@ const CreateProjectModal = () => {
           <ModalCloseButton />
           <ModalBody>
             <Text>Project Name</Text>
-            <Input />
+            <Input ref={nameRef} />
             <Text>Dimensions</Text>
             <HStack>
-              <Input placeholder="Height" />
-              <Input placeholder="Width" />
+              <Input placeholder="Height" ref={heightRef} />
+              <Input placeholder="Width" ref={widthRef} />
             </HStack>
           </ModalBody>
 
@@ -39,7 +66,7 @@ const CreateProjectModal = () => {
             <Button variant={'ghost'} onClick={onClose}>
               Cancel
             </Button>
-            <Button colorScheme="blue" mr={3}>
+            <Button colorScheme="blue" mr={3} onClick={handleProjectSubmit}>
               Create
             </Button>
           </ModalFooter>
