@@ -14,6 +14,7 @@ import MainLayout from './layouts/MainLayout/MainLayout'
 const Routes = () => {
   return (
     <Router>
+      <Route path="/project" page={ProjectPage} name="project" />
       <Set wrap={MainLayout}>
         <Route path="/" page={HomePage} name="home" />
       </Set>
