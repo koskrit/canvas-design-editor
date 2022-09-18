@@ -23,8 +23,8 @@ model User {
 }
 
 model Project {
-  Id              String @id
-  Creator         User   @relation(fields: [userId], references: [Id])
+  Id              String   @id
+  Creator         User     @relation(fields: [userId], references: [Id])
   userId          String
   Name            String
   PreviewImage    String
@@ -33,4 +33,6 @@ model Project {
   BackgroundColor String
   Slug            String
   Serialization   String
+  CreatedAt       DateTime @default(now())
+  ModifiedDate    DateTime
 }

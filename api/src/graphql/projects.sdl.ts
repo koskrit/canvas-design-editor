@@ -13,8 +13,8 @@ export const schema = gql`
   }
 
   type Query {
-    projects: [Project!]! @requireAuth
-    project(id: String!): Project @requireAuth
+    projects: [Project!]! @skipAuth
+    project(id: String!): Project @skipAuth
   }
 
   input CreateProjectInput {
@@ -42,9 +42,8 @@ export const schema = gql`
   }
 
   type Mutation {
-    createProject(input: CreateProjectInput!): Project! @requireAuth
-    updateProject(id: String!, input: UpdateProjectInput!): Project!
-      @requireAuth
-    deleteProject(id: String!): Project! @requireAuth
+    createProject(input: CreateProjectInput!): Project! @skipAuth
+    updateProject(id: String!, input: UpdateProjectInput!): Project! @skipAuth
+    deleteProject(id: String!): Project! @skipAuth
   }
 `

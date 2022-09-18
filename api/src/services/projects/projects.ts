@@ -19,6 +19,7 @@ export const project: QueryResolvers['project'] = ({ id }) => {
 export const createProject: MutationResolvers['createProject'] = ({
   input,
 }) => {
+  input.ModifiedDate = new Date()
   return db.project.create({
     data: input,
   })
@@ -28,6 +29,8 @@ export const updateProject: MutationResolvers['updateProject'] = ({
   id,
   input,
 }) => {
+  input.updatedAt = new Date()
+
   return db.project.update({
     data: input,
     where: { id },

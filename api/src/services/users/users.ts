@@ -13,6 +13,8 @@ export const user: QueryResolvers['user'] = ({ id }) => {
 }
 
 export const createUser: MutationResolvers['createUser'] = ({ input }) => {
+  input.ModifiedDate = new Date()
+
   return db.user.create({
     data: input,
   })
