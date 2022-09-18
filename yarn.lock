@@ -24726,7 +24726,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"uuid@npm:9.0.0":
+"uuid@npm:9.0.0, uuid@npm:^9.0.0":
   version: 9.0.0
   resolution: "uuid@npm:9.0.0"
   bin:
@@ -25015,6 +25015,7 @@ __metadata:
     react-dom: 17.0.2
     react-hooks-global-state: ^2.0.0
     react-icons: ^4.4.0
+    uuid: ^9.0.0
   languageName: unknown
   linkType: soft
 

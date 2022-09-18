@@ -15,6 +15,7 @@ import {
 
 const CreateProjectModal = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
+
   return (
     <>
       <Button onClick={onOpen}>Create A Project</Button>

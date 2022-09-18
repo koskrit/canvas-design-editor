@@ -1,8 +1,8 @@
-interface User {
+export interface User {
   email: string
-  userImage: string
-  userName: string
-  userID: string
+  photo: string
+  name: string
+  id: string
 }
 
 export default {} as User

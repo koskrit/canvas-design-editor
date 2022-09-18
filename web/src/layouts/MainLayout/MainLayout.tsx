@@ -12,9 +12,6 @@ import {
   VStack,
   IconButton,
   CloseButton,
-  InputGroup,
-  InputLeftElement,
-  Input,
   Avatar,
   Center,
 } from '@chakra-ui/react'
@@ -23,8 +20,6 @@ import {
   AiOutlineMenu,
   AiFillHome,
   AiOutlineInbox,
-  AiOutlineSearch,
-  AiFillBell,
   AiFillAlipayCircle,
 } from 'react-icons/ai'
 import { BsFillCameraVideoFill } from 'react-icons/bs'
@@ -44,6 +39,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
   const { currentUser } = useAuth()
   useEffect(() => {
     netlifyIdentityWidget.open('login')
+    netlifyIdentityWidget.on('login', (e) => console.log(e))
     setTimeout(() => console.log(currentUser), 1000 * 5)
   }, [])
 
