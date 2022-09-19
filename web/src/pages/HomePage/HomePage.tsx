@@ -14,7 +14,11 @@ const HomePage = () => {
   return (
     <>
       <MetaTags title="Home" description="Home page" />
-      {currentUser ? <ProjectsCell Id={currentUser?.sub} /> : <Spinner />}
+      {currentUser ? (
+        <ProjectsCell Id={currentUser?.sub} />
+      ) : (
+        <Spinner size={'xl'} />
+      )}
     </>
   )
 }
