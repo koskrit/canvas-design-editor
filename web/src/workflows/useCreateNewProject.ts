@@ -2,6 +2,7 @@ import { useApolloClient } from '@apollo/client'
 import { gql } from '@apollo/client'
 import { v4 as uuv4 } from 'uuid'
 
+import { useAuth } from '@redwoodjs/auth'
 import { navigate, routes } from '@redwoodjs/router'
 
 import type { Project } from 'src/contexts/currentProject'
@@ -47,7 +48,7 @@ const graphQLString = gql`
 
 export default function useCreateNewProject() {
   const [currentProject, setCurrentProject] = useGlobalState('currentProject')
-  const [currentUser, setCurrentUser] = useGlobalState('user')
+  const { currentUser } = useAuth()
 
   const apolloClient = useApolloClient()
 
@@ -67,10 +68,10 @@ export default function useCreateNewProject() {
     projectData.Id = projectData.Id || uuv4()
     projectData.Name = projectData.Name || `project-${projectData.Id}`
     projectData.Slug = projectData.Slug || projectData.Id
-    projectData.userId = projectData.userId || currentUser.id
+    projectData.userId = projectData.userId || currentUser.sub
     projectData.BackgroundColor = projectData.BackgroundColor || '#000'
-    projectData.Height = projectData.Height || 1000
-    projectData.Width = projectData.Width || 1000
+    projectData.Height = projectData.Height - 0 || 1000
+    projectData.Width = projectData.Width - 0 || 1000
     projectData.Serialization = projectData.Serialization || 'serialization'
 
     return projectData
