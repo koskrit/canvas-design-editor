@@ -1,11 +1,11 @@
-import { AuthProvider } from '@redwoodjs/auth'
+import { ChakraProvider, ColorModeScript, extendTheme } from '@chakra-ui/react'
+import * as theme from 'config/chakra.config'
 import netlifyIdentity from 'netlify-identity-widget'
+
+import { AuthProvider } from '@redwoodjs/auth'
 import { isBrowser } from '@redwoodjs/prerender/browserUtils'
 import { FatalErrorBoundary, RedwoodProvider } from '@redwoodjs/web'
 import { RedwoodApolloProvider } from '@redwoodjs/web/apollo'
-
-import { ChakraProvider, ColorModeScript, extendTheme } from '@chakra-ui/react'
-import * as theme from 'config/chakra.config'
 
 import FatalErrorPage from 'src/pages/FatalErrorPage'
 import Routes from 'src/Routes'
