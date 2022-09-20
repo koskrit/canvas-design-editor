@@ -20,6 +20,7 @@ model User {
   Slug         String
   ProfilePhoto String
   Project      Project[]
+  Image        Image[]
 }
 
 model Project {
@@ -35,4 +36,12 @@ model Project {
   Serialization   String
   CreatedAt       DateTime @default(now())
   ModifiedDate    DateTime
+}
+
+model Image {
+  Id        String   @id @default(uuid())
+  Creator   User     @relation(fields: [userId], references: [Id])
+  userId    String
+  ImageUrl  String
+  CreatedAt DateTime @default(now())
 }
