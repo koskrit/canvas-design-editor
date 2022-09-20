@@ -1,20 +1,20 @@
 import { useEffect } from 'react'
 
 import { Button, Flex, HStack, VStack } from '@chakra-ui/react'
-import {
-  AiFillCiCircle,
-  AiFillCodepenCircle,
-  AiOutlineFileText,
-} from 'react-icons/ai'
+import { AiFillCiCircle, AiOutlineFileText } from 'react-icons/ai'
 import { BsFillMouse3Fill, BsPencil } from 'react-icons/bs'
 
+import { useAuth } from '@redwoodjs/auth'
 import { MetaTags } from '@redwoodjs/web'
 
 import { FabricCanvas } from 'src/plugins/fabricJSCanvas'
 import { FilestackWidget } from 'src/plugins/filestackImage'
 
 const ProjectPage = () => {
-  useEffect(() => {}, [])
+  const { currentUser } = useAuth()
+  useEffect(() => {
+    console.log({ currentUser })
+  }, [])
   return (
     <>
       <MetaTags title="Project" description="Project page" />

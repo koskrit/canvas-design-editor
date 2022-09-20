@@ -8,11 +8,12 @@ export const schema = gql`
     Slug: String!
     ProfilePhoto: String!
     Project: [Project]!
+    Image: [Image]
   }
 
   type Query {
     users: [User!]! @skipAuth
-    user(id: String!): User @skipAuth
+    user(id: String!, type: String): User @skipAuth
   }
 
   input CreateUserInput {

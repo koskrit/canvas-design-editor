@@ -13,10 +13,10 @@ export const schema = gql`
   }
 
   input CreateImageInput {
-    Id: String!
+    Id: String
     userId: String!
     ImageUrl: String!
-    CreatedAt: DateTime!
+    CreatedAt: DateTime
   }
 
   input UpdateImageInput {

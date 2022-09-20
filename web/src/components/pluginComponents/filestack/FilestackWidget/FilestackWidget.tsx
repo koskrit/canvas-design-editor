@@ -1,6 +1,10 @@
 import { Button, Text, VStack } from '@chakra-ui/react'
 import ReactFilestack, { client } from 'faqta-filestack-react'
 
+import { useAuth } from '@redwoodjs/auth'
+
+import useSaveImageToDatabase from 'src/workflows/useSaveImageToDatabase'
+
 const FilestackWidget = () => {
   const options = {
     accept: 'image/*',
@@ -9,9 +13,17 @@ const FilestackWidget = () => {
       location: 's3',
     },
   }
+  const { currentUser } = useAuth()
+
+  const saveImageToDatabase = useSaveImageToDatabase()
 
   const onSuccess = (e) => {
-    console.log({ e })
+    e.filesUploaded.forEach(({ url }) =>
+      saveImageToDatabase({
+        userId: currentUser.sub,
+        ImageUrl: url,
+      })
+    )
   }
 
   return (

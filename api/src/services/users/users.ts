@@ -6,11 +6,12 @@ export const users: QueryResolvers['users'] = () => {
   return db.user.findMany()
 }
 
-export const user: QueryResolvers['user'] = ({ id: Id }) => {
+export const user: QueryResolvers['user'] = ({ id: Id, type }) => {
+  type = type || 'Project'
   return db.user.findUnique({
     where: { Id },
     include: {
-      Project: true,
+      [type]: true,
     },
   })
 }
