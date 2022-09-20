@@ -4,8 +4,8 @@
 // ```tsx
 // import type { ComponentStory } from '@storybook/react'
 //
-// export const generated: ComponentStory<typeof CloudinaryWidget> = (args) => {
-//   return <CloudinaryWidget {...args} />
+// export const generated: ComponentStory<typeof FilestackWidget> = (args) => {
+//   return <FilestackWidget {...args} />
 // }
 // ```
 //
@@ -13,13 +13,13 @@
 
 import type { ComponentMeta } from '@storybook/react'
 
-import CloudinaryWidget from './CloudinaryWidget'
+import FilestackWidget from './FilestackWidget'
 
 export const generated = () => {
-  return <CloudinaryWidget />
+  return <FilestackWidget />
 }
 
 export default {
-  title: 'Components/CloudinaryWidget',
-  component: CloudinaryWidget,
-} as ComponentMeta<typeof CloudinaryWidget>
+  title: 'Components/FilestackWidget',
+  component: FilestackWidget,
+} as ComponentMeta<typeof FilestackWidget>

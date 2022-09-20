@@ -1,14 +1,14 @@
 import { render } from '@redwoodjs/testing/web'
 
-import CloudinaryWidget from './CloudinaryWidget'
+import FilestackWidget from './FilestackWidget'
 
 //   Improve this test with help from the Redwood Testing Doc:
 //    https://redwoodjs.com/docs/testing#testing-components
 
-describe('CloudinaryWidget', () => {
+describe('FilestackWidget', () => {
   it('renders successfully', () => {
     expect(() => {
-      render(<CloudinaryWidget />)
+      render(<FilestackWidget />)
     }).not.toThrow()
   })
 })

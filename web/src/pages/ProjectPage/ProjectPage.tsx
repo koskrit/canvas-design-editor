@@ -10,8 +10,8 @@ import { BsFillMouse3Fill, BsPencil } from 'react-icons/bs'
 
 import { MetaTags } from '@redwoodjs/web'
 
-import { CloudinaryWidget } from 'src/plugins/cloudinaryImage'
 import { FabricCanvas } from 'src/plugins/fabricJSCanvas'
+import { FilestackWidget } from 'src/plugins/filestackImage'
 
 const ProjectPage = () => {
   useEffect(() => {}, [])
@@ -35,8 +35,7 @@ const ProjectPage = () => {
             </Button>
           </VStack>
           <VStack background={'green'} h="500px" minW={'200px'}>
-            <Button w={'full'}>Upload Media</Button>
-            <CloudinaryWidget />
+            <FilestackWidget />
           </VStack>
         </HStack>
         <FabricCanvas />
