@@ -7,6 +7,7 @@ import { BsFillMouse3Fill, BsPencil } from 'react-icons/bs'
 import { useAuth } from '@redwoodjs/auth'
 import { MetaTags } from '@redwoodjs/web'
 
+import UploadedImagesCell from 'src/components/cells/UploadedImagesCell'
 import { FabricCanvas } from 'src/plugins/fabricJSCanvas'
 import { FilestackWidget } from 'src/plugins/filestackImage'
 

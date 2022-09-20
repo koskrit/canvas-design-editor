@@ -6,7 +6,7 @@ import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 
 import useGlobalState from 'src/contexts/initialization'
 
-import ProjectItem from '../ProjectItem/ProjectItem'
+import ProjectItem from '../../ProjectItem/ProjectItem'
 
 export const QUERY = gql`
   query ProjectQuery($Id: String!) {
