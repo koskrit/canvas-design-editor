@@ -1,7 +1,7 @@
 import { Center, Container, Flex, Wrap, WrapItem } from '@chakra-ui/react'
 import type { ProjectsQuery } from 'types/graphql'
 
-import { navigate, routes } from '@redwoodjs/router'
+import { navigate, NavLink, routes } from '@redwoodjs/router'
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 
 import useGlobalState from 'src/contexts/initialization'
@@ -36,11 +36,22 @@ export const Failure = ({ error }: CellFailureProps) => (
 
 export const Success = (data: CellSuccessProps<ProjectsQuery>) => {
   const Project = data?.user?.Project
+  const [currentProject, setCurrentProject] = useGlobalState('currentProject')
+  console.log({ Project })
 
   return (
     <Flex display={'inline-flex'} flexWrap="wrap">
       {Project?.map((item) => {
-        return <ProjectItem key={item.Id} projectInfo={item} />
+        return (
+          <NavLink
+            key={item.Id}
+            activeClassName={'project-link'}
+            onClick={() => setCurrentProject(item)}
+            to={routes.project({ id: item.Id })}
+          >
+            <ProjectItem projectInfo={item} />
+          </NavLink>
+        )
       })}
     </Flex>
   )

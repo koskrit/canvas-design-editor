@@ -8,6 +8,7 @@ export interface Project {
   BackgroundColor: string
   Slug: string
   Serialization: string
+  __typename: string
 }
 
 export default {} as Project

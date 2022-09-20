@@ -19,7 +19,7 @@ export function beforeQuery(props) {
   return {
     variables: props,
     // fetchPolicy: 'cache-and-network',
-    refetchQueries: [{ query: QUERY, variables: props }],
+    // refetchQueries: [{ query: QUERY, variables: props }],
   }
 }
 
@@ -35,9 +35,9 @@ export const Success = (data: CellSuccessProps<UploadedImagesQuery>) => {
   const uploadedImages = data?.user?.Image
 
   return (
-    <Wrap overflowY={'auto'} overflowX="hidden">
-      {uploadedImages.map(({ ImageUrl }) => (
-        <Box key={ImageUrl} border="8px">
+    <Wrap overflowY={'auto'} overflowX="hidden" maxWidth={'200px'} pr={2}>
+      {uploadedImages.map(({ ImageUrl, CreatedAt }) => (
+        <Box key={CreatedAt} border="8px">
           <Image src={ImageUrl || '/defaults/image-icon.jpg'} />
         </Box>
       ))}
