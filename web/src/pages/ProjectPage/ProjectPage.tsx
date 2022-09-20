@@ -8,11 +8,17 @@ import { useAuth } from '@redwoodjs/auth'
 import { MetaTags } from '@redwoodjs/web'
 
 import UploadedImagesCell from 'src/components/cells/UploadedImagesCell'
+import useGlobalState from 'src/contexts/initialization'
 import { FabricCanvas } from 'src/plugins/fabricJSCanvas'
 import { FilestackWidget } from 'src/plugins/filestackImage'
 
 const ProjectPage = () => {
   const { currentUser } = useAuth()
+  const [uploadedImagesRender, setUploadedImagesRender] = useGlobalState(
+    'uploadedImagesRender'
+  )
+  console.log(uploadedImagesRender)
+
   useEffect(() => {
     console.log({ currentUser })
   }, [])
@@ -37,6 +43,13 @@ const ProjectPage = () => {
           </VStack>
           <VStack background={'green'} h="500px" minW={'200px'}>
             <FilestackWidget />
+            {uploadedImagesRender && (
+              <UploadedImagesCell
+                userId={currentUser.sub}
+                type={'Image'}
+                uploadedImagesRender={uploadedImagesRender}
+              />
+            )}
           </VStack>
         </HStack>
         <FabricCanvas />
