@@ -13,6 +13,9 @@ export const projects: QueryResolvers['projects'] = () => {
 export const project: QueryResolvers['project'] = ({ id }) => {
   return db.project.findUnique({
     where: { id },
+    include: {
+      Image: true,
+    },
   })
 }
 

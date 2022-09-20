@@ -10,6 +10,7 @@ export const schema = gql`
     BackgroundColor: String!
     Slug: String!
     Serialization: String!
+    Image: [Image]
   }
 
   type Query {

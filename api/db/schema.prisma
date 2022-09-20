@@ -36,12 +36,15 @@ model Project {
   Serialization   String
   CreatedAt       DateTime @default(now())
   ModifiedDate    DateTime
+  Image           Image[]
 }
 
 model Image {
   Id        String   @id @default(uuid())
   Creator   User     @relation(fields: [userId], references: [Id])
+  Project   Project? @relation(fields: [ProjectId], references: [Id])
   userId    String
   ImageUrl  String
   CreatedAt DateTime @default(now())
+  ProjectId String?
 }

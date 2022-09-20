@@ -5,6 +5,7 @@ export const schema = gql`
     userId: String!
     ImageUrl: String!
     CreatedAt: DateTime!
+    ProjectId: String!
   }
 
   type Query {
@@ -17,6 +18,7 @@ export const schema = gql`
     userId: String!
     ImageUrl: String!
     CreatedAt: DateTime
+    ProjectId: String!
   }
 
   input UpdateImageInput {
