@@ -8,6 +8,8 @@ import { useAuth } from '@redwoodjs/auth'
 import { MetaTags } from '@redwoodjs/web'
 
 import UploadedImagesCell from 'src/components/cells/UploadedImagesCell'
+import CanvasSideMenu from 'src/components/pluginComponents/FabricJSCanvas/CanvasSideMenu/CanvasSideMenu'
+import CanvasTopMenu from 'src/components/pluginComponents/FabricJSCanvas/CanvasTopMenu/CanvasTopMenu'
 import useGlobalState from 'src/contexts/initialization'
 import { FabricCanvas } from 'src/plugins/fabricJSCanvas'
 import { FilestackWidget } from 'src/plugins/filestackImage'
@@ -27,20 +29,7 @@ const ProjectPage = () => {
       <MetaTags title="Project" description="Project page" />
       <Flex>
         <HStack background={'blue'}>
-          <VStack background={'orange'} minH="500px" minW="50px">
-            <Button background={'blue'} size="sm">
-              <AiOutlineFileText color="white" />
-            </Button>
-            <Button background={'blue'} size="sm">
-              <BsFillMouse3Fill color="white" />
-            </Button>
-            <Button background={'blue'} size="sm">
-              <AiFillCiCircle color="white" />
-            </Button>
-            <Button background={'blue'} size="sm">
-              <BsPencil color="white" />
-            </Button>
-          </VStack>
+          <CanvasSideMenu />
           <VStack background={'green'} h="500px" minW={'200px'}>
             <FilestackWidget />
             {uploadedImagesRender && (
@@ -52,7 +41,10 @@ const ProjectPage = () => {
             )}
           </VStack>
         </HStack>
-        <FabricCanvas />
+        <VStack w="full" background={'gray'}>
+          <CanvasTopMenu />
+          <FabricCanvas />
+        </VStack>
       </Flex>
     </>
   )
