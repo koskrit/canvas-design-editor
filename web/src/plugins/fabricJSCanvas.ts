@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react'
 
 import { fabric } from 'fabric'
-import { useFabricJSEditor } from 'fabricjs-react'
 
 import FabricCanvas from 'src/components/pluginComponents/FabricJSCanvas/FabricCanvas/FabricCanvas'
 import useGlobalState from 'src/contexts/initialization'

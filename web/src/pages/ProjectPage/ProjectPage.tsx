@@ -1,8 +1,6 @@
 import { useEffect } from 'react'
 
 import { Button, Flex, HStack, VStack } from '@chakra-ui/react'
-import { AiFillCiCircle, AiOutlineFileText } from 'react-icons/ai'
-import { BsFillMouse3Fill, BsPencil } from 'react-icons/bs'
 
 import { useAuth } from '@redwoodjs/auth'
 import { MetaTags } from '@redwoodjs/web'

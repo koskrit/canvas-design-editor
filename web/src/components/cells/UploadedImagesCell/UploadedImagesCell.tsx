@@ -1,4 +1,4 @@
-import { Box, Image, Wrap } from '@chakra-ui/react'
+import { Wrap } from '@chakra-ui/react'
 import type { UploadedImagesQuery } from 'types/graphql'
 
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
