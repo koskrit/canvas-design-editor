@@ -66,3 +66,39 @@ export const setCanvasModeDrawing = (enabled: boolean) => {
 
   return itemRef
 }
+
+type Shape = 'Rectangle' | 'Circle' | 'Line'
+
+export const addShape = (shape: Shape) => {
+  const [fabricJSApi, setFabricJSAPi] = useGlobalState('fabricJSApi')
+  const itemRef = useRef()
+
+  useEffect(() => {
+    const { fabricJSEditor } = fabricJSApi
+
+    const setCanvasModeDrawingFunc = (shape: Shape) => {
+      fabricJSEditor['add' + shape]()
+    }
+
+    itemRef.current.onclick = (e) => setCanvasModeDrawingFunc(shape)
+  }, [fabricJSApi])
+
+  return itemRef
+}
+
+export const setCanvasModeSelection = () => {
+  const [fabricJSApi, setFabricJSAPi] = useGlobalState('fabricJSApi')
+  const itemRef = useRef()
+
+  useEffect(() => {
+    const { fabricJSEditor } = fabricJSApi
+
+    const setCanvasModeSelectionFunc = () => {
+      fabricJSEditor.canvas.isDrawingMode = false
+    }
+
+    itemRef.current.onclick = (e) => setCanvasModeSelectionFunc()
+  }, [fabricJSApi])
+
+  return itemRef
+}

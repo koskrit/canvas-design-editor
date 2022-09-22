@@ -2,22 +2,26 @@ import { Button, VStack } from '@chakra-ui/react'
 import { AiFillCiCircle, AiOutlineFileText } from 'react-icons/ai'
 import { BsFillMouse3Fill, BsPencil } from 'react-icons/bs'
 
-import { setCanvasModeDrawing } from 'src/plugins/fabricJSCanvas'
+import {
+  setCanvasModeDrawing,
+  setCanvasModeSelection,
+} from 'src/plugins/fabricJSCanvas'
+
+import CanvasSideMenuShapes from '../CanvasSideMenuShapes/CanvasSideMenuShapes'
 
 const CanvasSideMenu = () => {
-  const itemRef = setCanvasModeDrawing(true)
+  const drawingRef = setCanvasModeDrawing(true)
+  const selectRef = setCanvasModeSelection()
   return (
     <VStack pt={1} background={'orange'} minH="500px" minW="50px">
       <Button background={'blue'} size="sm">
         <AiOutlineFileText color="white" />
       </Button>
-      <Button background={'blue'} size="sm">
+      <Button ref={selectRef} background={'blue'} size="sm">
         <BsFillMouse3Fill color="white" />
       </Button>
-      <Button background={'blue'} size="sm">
-        <AiFillCiCircle color="white" />
-      </Button>
-      <Button ref={itemRef} background={'blue'} size="sm">
+      <CanvasSideMenuShapes />
+      <Button ref={drawingRef} background={'blue'} size="sm">
         <BsPencil color="white" />
       </Button>
     </VStack>
