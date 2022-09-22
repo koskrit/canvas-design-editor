@@ -1,18 +1,22 @@
 import { Button, HStack } from '@chakra-ui/react'
-import { AiFillAccountBook } from 'react-icons/ai'
+import { AiFillAccountBook, AiFillDelete } from 'react-icons/ai'
 
-import { setCanvasBackgroundColor } from 'src/plugins/fabricJSCanvas'
+import {
+  deleteCanvasSelection,
+  setCanvasBackgroundColor,
+} from 'src/plugins/fabricJSCanvas'
 
 const CanvasTopMenu = () => {
-  const itemRef = setCanvasBackgroundColor()
+  const setBackgroundColorRef = setCanvasBackgroundColor()
+  const deleteSelectionRef = deleteCanvasSelection()
 
   return (
     <HStack w="full" p={2} background={'lightcoral'}>
       <Button>
-        <input ref={itemRef} type={'color'} />
+        <input ref={setBackgroundColorRef} type={'color'} />
       </Button>
-      <Button>
-        <AiFillAccountBook />
+      <Button ref={deleteSelectionRef}>
+        <AiFillDelete />
       </Button>
       <Button>
         <AiFillAccountBook />

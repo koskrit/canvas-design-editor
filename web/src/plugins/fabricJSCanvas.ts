@@ -102,3 +102,20 @@ export const setCanvasModeSelection = () => {
 
   return itemRef
 }
+
+export const deleteCanvasSelection = () => {
+  const [fabricJSApi, setFabricJSAPi] = useGlobalState('fabricJSApi')
+  const itemRef = useRef()
+
+  useEffect(() => {
+    const { fabricJSEditor } = fabricJSApi
+
+    const deleteCanvasSelectionFunc = () => {
+      fabricJSEditor.canvas.remove(fabricJSEditor.canvas.getActiveObject())
+    }
+
+    itemRef.current.onclick = (e) => deleteCanvasSelectionFunc()
+  }, [fabricJSApi])
+
+  return itemRef
+}
