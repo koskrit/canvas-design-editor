@@ -49,3 +49,20 @@ export const setCanvasBackgroundColor = () => {
 
   return itemRef
 }
+
+export const setCanvasModeDrawing = (enabled: boolean) => {
+  const [fabricJSApi, setFabricJSAPi] = useGlobalState('fabricJSApi')
+  const itemRef = useRef()
+
+  useEffect(() => {
+    const { fabricJSEditor } = fabricJSApi
+
+    const setCanvasModeDrawingFunc = (enabled: boolean) => {
+      fabricJSEditor.canvas.isDrawingMode = enabled
+    }
+
+    itemRef.current.onclick = (e) => setCanvasModeDrawingFunc(enabled)
+  }, [fabricJSApi])
+
+  return itemRef
+}
