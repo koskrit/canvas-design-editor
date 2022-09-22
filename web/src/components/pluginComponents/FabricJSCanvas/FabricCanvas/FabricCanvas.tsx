@@ -1,25 +1,22 @@
-import { useEffect, useLayoutEffect, useRef } from 'react'
+import {
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useCallback,
+  useState,
+} from 'react'
 
 import { Center, Container, chakra, Box } from '@chakra-ui/react'
 import { useFabricJSEditor, FabricJSCanvas } from 'fabricjs-react'
 
 import useGlobalState from 'src/contexts/initialization'
+import { fabric } from 'src/plugins/fabricJSCanvas'
 
 const FabricCanvas = () => {
-  const { onReady } = useFabricJSEditor()
-  const [currentProject, setCurrentProject] = useGlobalState('currentProject')
-  useLayoutEffect(() => {
-    const canvas = document.querySelector('canvas')
-
-    canvas.height = currentProject?.Height || 1000
-    canvas.width = currentProject?.Height || 500
-    canvas.style.background = currentProject.BackgroundColor || 'white'
-  }, [])
-  console.log({ currentProject })
+  const { onReady } = useSetupCanvas()
 
   return (
     <Center
-      background={'gray'}
       p={0}
       w={'full'}
       h={'500px'}
@@ -28,9 +25,43 @@ const FabricCanvas = () => {
       overflowX="auto"
       border={'solid 2px orange'}
     >
-      <FabricJSCanvas onReady={onReady} />
+      <FabricJSCanvas className="main-canvas" onReady={onReady} />
     </Center>
   )
+}
+
+export function useSetupCanvas() {
+  const { onReady, editor } = useFabricJSEditor()
+  const [fabricJSApi, setFabricJSAPi] = useGlobalState('fabricJSApi')
+  const [shouldRender, setShouldRender] = useState(true)
+
+  useSetCanvasLayout()
+
+  useEffect(() => {
+    if (shouldRender && editor) {
+      setFabricJSAPi({ fabricJSEditor: editor })
+      setShouldRender(false)
+    }
+  }, [editor])
+
+  return { onReady, editor }
+}
+
+const useSetCanvasLayout = () => {
+  const [currentProject, setCurrentProject] = useGlobalState('currentProject')
+
+  useLayoutEffect(() => {
+    const canvas = document.querySelector('.main-canvas')
+
+    canvas.style.height = currentProject?.Height
+      ? `${currentProject?.Height}px`
+      : '500px'
+    canvas.style.width = currentProject?.Width
+      ? `${currentProject?.Width}px`
+      : '1000px'
+
+    canvas.style.background = currentProject.BackgroundColor || 'white'
+  }, [])
 }
 
 export default FabricCanvas

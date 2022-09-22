@@ -3,6 +3,8 @@ import type { UploadedImagesQuery } from 'types/graphql'
 
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 
+import UploadedImage from 'src/components/UploadedImage/UploadedImage'
+
 export const QUERY = gql`
   query UploadedImagesQuery($userId: String!, $type: String) {
     user(id: $userId, type: $type) {
@@ -32,14 +34,16 @@ export const Failure = ({ error }: CellFailureProps) => (
 )
 
 export const Success = (data: CellSuccessProps<UploadedImagesQuery>) => {
-  const uploadedImages = data?.user?.Image
+  const uploadedImages = [...data?.user?.Image].reverse()
 
   return (
     <Wrap overflowY={'auto'} overflowX="hidden" maxWidth={'200px'} pr={2}>
       {uploadedImages.map(({ ImageUrl, CreatedAt }) => (
-        <Box key={CreatedAt} border="8px">
-          <Image src={ImageUrl || '/defaults/image-icon.jpg'} />
-        </Box>
+        <UploadedImage
+          key={CreatedAt}
+          ImageUrl={ImageUrl}
+          CreatedAt={CreatedAt}
+        />
       ))}
     </Wrap>
   )
