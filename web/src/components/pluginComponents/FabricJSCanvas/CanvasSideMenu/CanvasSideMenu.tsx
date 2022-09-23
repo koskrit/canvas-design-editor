@@ -1,6 +1,7 @@
 import { Button, VStack } from '@chakra-ui/react'
-import { AiFillCiCircle, AiOutlineFileText } from 'react-icons/ai'
-import { BsFillMouse3Fill, BsPencil } from 'react-icons/bs'
+import { BiText } from 'react-icons/bi'
+import { BsPencil } from 'react-icons/bs'
+import { FaMousePointer } from 'react-icons/fa'
 
 import {
   setCanvasAddShapeMode,
@@ -18,10 +19,10 @@ const CanvasSideMenu = () => {
   return (
     <VStack pt={1} background={'orange'} minH="500px" minW="50px">
       <Button ref={textRef} background={'blue'} size="sm">
-        <AiOutlineFileText color="white" />
+        <BiText color="white" />
       </Button>
       <Button ref={selectRef} background={'blue'} size="sm">
-        <BsFillMouse3Fill color="white" />
+        <FaMousePointer color="white" />
       </Button>
       <CanvasSideMenuShapes />
       <Button ref={drawingRef} background={'blue'} size="sm">

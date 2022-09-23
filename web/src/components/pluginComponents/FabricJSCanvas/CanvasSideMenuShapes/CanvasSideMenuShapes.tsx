@@ -9,7 +9,9 @@ import {
   PopoverHeader,
   PopoverTrigger,
 } from '@chakra-ui/react'
-import { AiFillCiCircle, AiFillIeSquare, AiOutlineLine } from 'react-icons/ai'
+import { BiShapeCircle } from 'react-icons/bi'
+import { RiShape2Fill } from 'react-icons/ri'
+import { TbLine } from 'react-icons/tb'
 
 import { addShape, setCanvasAddShapeMode } from 'src/plugins/fabricJSCanvas'
 
@@ -25,11 +27,11 @@ const CanvasSideMenuShapes = () => {
   const getParentShapeIcon = () => {
     switch (parentShape) {
       case 'Circle':
-        return <AiFillCiCircle color="white" />
+        return <BiShapeCircle color="white" />
       case 'Rect':
-        return <AiFillIeSquare color="white" />
+        return <RiShape2Fill color="white" />
       case 'Line':
-        return <AiOutlineLine color="white" />
+        return <TbLine color="white" />
     }
   }
   const setShapeHandler = (shape: Shape) => {
@@ -54,7 +56,7 @@ const CanvasSideMenuShapes = () => {
             size="sm"
             m={1}
           >
-            <AiFillCiCircle color="white" />
+            <BiShapeCircle color="white" />
           </Button>
           <Button
             ref={rectangleRef}
@@ -63,7 +65,7 @@ const CanvasSideMenuShapes = () => {
             size="sm"
             m={1}
           >
-            <AiFillIeSquare color="white" />
+            <RiShape2Fill color="white" />
           </Button>
           <Button
             ref={lineRef}
@@ -72,7 +74,7 @@ const CanvasSideMenuShapes = () => {
             size="sm"
             m={1}
           >
-            <AiOutlineLine color="white" />
+            <TbLine color="white" />
           </Button>
         </PopoverHeader>
       </PopoverContent>
