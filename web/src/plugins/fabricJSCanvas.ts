@@ -7,6 +7,13 @@ import useGlobalState from 'src/contexts/initialization'
 
 export { FabricCanvas, fabric }
 
+const fabricState = {
+  selectedObject: {
+    stroke: '#000',
+    fill: '#000',
+  },
+}
+
 export const addImageListener = (ImageUrl: string) => {
   const [fabricJSApi, setFabricJSAPi] = useGlobalState('fabricJSApi')
   const itemRef = useRef()
@@ -43,7 +50,7 @@ export const setCanvasBackgroundColor = () => {
       })
     }
 
-    itemRef.current.onchange = (e) => setCanvasBackgroundColorFunc(e)
+    itemRef.current.oninput = (e) => setCanvasBackgroundColorFunc(e)
   }, [fabricJSApi])
 
   return itemRef
@@ -172,8 +179,8 @@ export const setCanvasAddShapeMode = (shape: Shape) => {
 
       createdShape = new fabric.Line(points, {
         strokeWidth: 5,
-        fill: 'red',
-        stroke: 'red',
+        fill: fabricState.selectedObject.fill,
+        stroke: fabricState.selectedObject.stroke,
         originX: 'center',
         originY: 'center',
       })
@@ -213,8 +220,8 @@ function setCanvasDrawSquare(canvas: any) {
     rectangle = new fabric.Rect({
       left: origX,
       top: origY,
-      fill: '',
-      stroke: 'red',
+      fill: fabricState.selectedObject.fill,
+      stroke: fabricState.selectedObject.stroke,
       strokeWidth: 3,
     })
     canvas.add(rectangle)
@@ -259,8 +266,8 @@ function setCanvasDrawCircle(canvas: any) {
       originY: 'top',
       radius: pointer.x - origX,
       angle: 0,
-      fill: '',
-      stroke: 'red',
+      fill: fabricState.selectedObject.fill,
+      stroke: fabricState.selectedObject.stroke,
       strokeWidth: 3,
     })
     canvas.add(circle)
@@ -292,4 +299,35 @@ function setCanvasDrawCircle(canvas: any) {
   canvas.on('mouse:up', function (e) {
     isDown = false
   })
+}
+
+type Attribute = 'stroke' | 'fill' | 'width' | 'height' | 'strokeWidth'
+
+export const setSelectionAttribute = (attribute: Attribute) => {
+  const [fabricJSApi, setFabricJSAPi] = useGlobalState('fabricJSApi')
+  const itemRef = useRef()
+
+  useEffect(() => {
+    const { fabricJSEditor } = fabricJSApi
+
+    const setSelectionAttributeFunc = (e) => {
+      const { canvas } = fabricJSEditor
+      const value = e.target.value
+      const active = canvas.getActiveObject()
+
+      if (active) {
+        active.set({ [attribute]: value })
+
+        if (active.type == 'activeSelection') {
+          active.getObjects().forEach((obj) => obj.set({ [attribute]: value }))
+        }
+        canvas.renderAll()
+      }
+      fabricState.selectedObject[attribute] = value
+    }
+
+    itemRef.current.oninput = (e) => setSelectionAttributeFunc(e)
+  }, [fabricJSApi])
+
+  return itemRef
 }
