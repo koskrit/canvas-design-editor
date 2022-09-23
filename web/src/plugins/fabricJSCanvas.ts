@@ -74,7 +74,7 @@ export const setCanvasModeDrawing = (enabled: boolean) => {
   return itemRef
 }
 
-type Shape = 'Rect' | 'Circle' | 'Line'
+type Shape = 'Rect' | 'Circle' | 'Line' | 'IText'
 
 export const addShape = (shape: Shape) => {
   const [fabricJSApi, setFabricJSAPi] = useGlobalState('fabricJSApi')
@@ -151,10 +151,14 @@ export const setCanvasAddShapeMode = (shape: Shape) => {
         action = (e) => setCanvasDrawLine(fabricJSEditor.canvas)
         break
       case 'Rect':
-        action = (e) => setCanvasDrawSquare(fabricJSEditor.canvas)
+        action = (e) => setCanvasDrawSquareOrText(fabricJSEditor.canvas, 'Rect')
         break
       case 'Circle':
         action = (e) => setCanvasDrawCircle(fabricJSEditor.canvas)
+        break
+      case 'IText':
+        action = (e) =>
+          setCanvasDrawSquareOrText(fabricJSEditor.canvas, 'IText')
         break
     }
 
@@ -202,10 +206,10 @@ export const setCanvasAddShapeMode = (shape: Shape) => {
   }
 }
 
-function setCanvasDrawSquare(canvas: any) {
+function setCanvasDrawSquareOrText(canvas: any, type: 'Rect' | 'IText') {
   canvas.__eventListeners = {}
 
-  let rectangle, isDown, origX, origY
+  let objShape, isDown, origX, origY
 
   canvas.on('mouse:down', function (e) {
     if (canvas.getActiveObject()) {
@@ -217,28 +221,40 @@ function setCanvasDrawSquare(canvas: any) {
     origX = pointer.x
     origY = pointer.y
 
-    rectangle = new fabric.Rect({
-      left: origX,
-      top: origY,
-      fill: fabricState.selectedObject.fill,
-      stroke: fabricState.selectedObject.stroke,
-      strokeWidth: 3,
-    })
-    canvas.add(rectangle)
+    if (type === 'Rect') {
+      objShape = new fabric.Rect({
+        left: origX,
+        top: origY,
+        fill: fabricState.selectedObject.fill,
+        stroke: fabricState.selectedObject.stroke,
+        strokeWidth: 3,
+      })
+    } else if (type === 'IText') {
+      objShape = new fabric.IText('Insert Text...', {
+        left: origX,
+        top: origY,
+        fill: fabricState.selectedObject.fill,
+        stroke: fabricState.selectedObject.stroke,
+        strokeWidth: 3,
+      })
+      console.log({ objShape })
+    }
+
+    canvas.add(objShape)
   })
 
   canvas.on('mouse:move', function (e) {
     if (!isDown) return
     const pointer = canvas.getPointer(e.e)
     if (origX > pointer.x) {
-      rectangle.set({ left: Math.abs(pointer.x) })
+      objShape.set({ left: Math.abs(pointer.x) })
     }
     if (origY > pointer.y) {
-      rectangle.set({ top: Math.abs(pointer.y) })
+      objShape.set({ top: Math.abs(pointer.y) })
     }
 
-    rectangle.set({ width: Math.abs(origX - pointer.x) })
-    rectangle.set({ height: Math.abs(origY - pointer.y) })
+    objShape.set({ width: Math.abs(origX - pointer.x) })
+    objShape.set({ height: Math.abs(origY - pointer.y) })
     canvas.renderAll()
   })
 
@@ -301,6 +317,7 @@ function setCanvasDrawCircle(canvas: any) {
   })
 }
 
+/* -------------------------------- Top Menu -------------------------------- */
 type Attribute = 'stroke' | 'fill' | 'width' | 'height' | 'strokeWidth'
 
 export const setSelectionAttribute = (attribute: Attribute) => {
