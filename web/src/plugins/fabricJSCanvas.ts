@@ -348,3 +348,43 @@ export const setSelectionAttribute = (attribute: Attribute) => {
 
   return itemRef
 }
+
+export const useSetCanvasActiveOpacity = (sliderValue: any) => {
+  const [fabricJSApi, setFabricJSAPi] = useGlobalState('fabricJSApi')
+  const objRef = useRef()
+
+  useEffect(() => {
+    const { fabricJSEditor } = fabricJSApi
+
+    if (fabricJSEditor) {
+      const { canvas } = fabricJSEditor
+      const active = canvas.getActiveObject()
+      const opacity = sliderValue / 100
+
+      if (active) {
+        active.opacity = opacity
+        objRef.current = active
+        if (active.type == 'activeSelection') {
+          active.getObjects().forEach((obj) => (obj.opacity = opacity))
+        }
+        canvas.renderAll()
+      }
+    }
+  }, [fabricJSApi, sliderValue])
+  return objRef
+}
+
+export const getCanvasObject = () => {
+  const [fabricJSApi, setFabricJSAPi] = useGlobalState('fabricJSApi')
+  const objRef = useRef()
+
+  useEffect(() => {
+    const { fabricJSEditor } = fabricJSApi
+
+    if (fabricJSEditor) {
+      const { canvas } = fabricJSEditor
+      objRef.current = canvas
+    }
+  }, [fabricJSApi])
+  return objRef
+}

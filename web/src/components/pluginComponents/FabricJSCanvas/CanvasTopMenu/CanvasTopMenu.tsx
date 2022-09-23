@@ -1,7 +1,7 @@
 import { Button, HStack } from '@chakra-ui/react'
 import { AiFillAccountBook, AiTwotonePicture } from 'react-icons/ai'
 import { BsSquareFill } from 'react-icons/bs'
-import { CgShapeSquare } from 'react-icons/cg'
+import { CgShapeSquare, CgDropOpacity } from 'react-icons/cg'
 import { TiDelete } from 'react-icons/ti'
 
 import {
@@ -9,6 +9,8 @@ import {
   setCanvasBackgroundColor,
   setSelectionAttribute,
 } from 'src/plugins/fabricJSCanvas'
+
+import CanvasTopMenuOpacity from '../CanvasTopMenuOpacity/CanvasTopMenuOpacity'
 
 const CanvasTopMenu = () => {
   const setBackgroundColorRef = setCanvasBackgroundColor()
@@ -33,9 +35,7 @@ const CanvasTopMenu = () => {
         <BsSquareFill />
         <input type={'color'} />
       </HStack>
-      <Button border="solid 1px" background="white">
-        <AiFillAccountBook />
-      </Button>
+      <CanvasTopMenuOpacity />
     </HStack>
   )
 }
