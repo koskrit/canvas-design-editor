@@ -20,7 +20,7 @@ const FabricCanvas = () => {
       p={0}
       w={'full'}
       h={'500px'}
-      background="lightblue"
+      background="lightcoral"
       overflowY={'auto'}
       overflowX="auto"
       border={'solid 2px orange'}

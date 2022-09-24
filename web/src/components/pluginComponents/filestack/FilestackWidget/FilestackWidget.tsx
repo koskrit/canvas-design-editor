@@ -33,7 +33,7 @@ const FilestackWidget = () => {
       onSuccess={onSuccess}
       preload={true}
       render={({ onPick }) => (
-        <VStack background={'white'} p={4}>
+        <VStack background={'white'} p={4} w="97%">
           <Text>Select an Image to Upload</Text>
           <Button onClick={onPick} w={'full'}>
             Upload an Image

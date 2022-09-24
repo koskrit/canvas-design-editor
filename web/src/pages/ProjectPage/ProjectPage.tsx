@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 
-import { Button, Flex, HStack, VStack } from '@chakra-ui/react'
+import { Button, Center, Flex, HStack, Text, VStack } from '@chakra-ui/react'
+import { SiMaterialdesign } from 'react-icons/si'
 
 import { useAuth } from '@redwoodjs/auth'
 import { MetaTags } from '@redwoodjs/web'
@@ -26,19 +27,29 @@ const ProjectPage = () => {
     <>
       <MetaTags title="Project" description="Project page" />
       <Flex>
-        <HStack background={'blue'}>
-          <CanvasSideMenu />
-          <VStack background={'green'} h="500px" minW={'200px'}>
-            <FilestackWidget />
-            {uploadedImagesRender && (
-              <UploadedImagesCell
-                userId={currentUser.sub}
-                type={'Image'}
-                uploadedImagesRender={uploadedImagesRender}
-              />
-            )}
-          </VStack>
-        </HStack>
+        <VStack>
+          <Center background={'lightsalmon'} w={'full'} h="57" border={'1px'}>
+            <HStack w={'full'} justifyContent="center">
+              <SiMaterialdesign fontSize={'30'} color="white" />
+              <Text fontSize={'3xl'} color="white">
+                Canvas
+              </Text>
+            </HStack>
+          </Center>
+          <HStack background={'blue'} mt="0px !important">
+            <CanvasSideMenu />
+            <VStack background={'green'} h="507px" minW={'200px'}>
+              <FilestackWidget />
+              {uploadedImagesRender && (
+                <UploadedImagesCell
+                  userId={currentUser.sub}
+                  type={'Image'}
+                  uploadedImagesRender={uploadedImagesRender}
+                />
+              )}
+            </VStack>
+          </HStack>
+        </VStack>
         <VStack w="full" background={'gray'}>
           <CanvasTopMenu />
           <FabricCanvas />

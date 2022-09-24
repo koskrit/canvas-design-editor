@@ -35,7 +35,11 @@ const CanvasTopMenuOpacity = () => {
   return (
     <Popover>
       <PopoverTrigger>
-        <Button onClick={opacityToggleHandler} background={'white'} size="sm">
+        <Button
+          onClick={opacityToggleHandler}
+          background={'white'}
+          border="solid 1px"
+        >
           <CgDropOpacity />
         </Button>
       </PopoverTrigger>

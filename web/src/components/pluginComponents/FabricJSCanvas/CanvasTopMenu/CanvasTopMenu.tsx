@@ -1,8 +1,7 @@
 import { Button, HStack } from '@chakra-ui/react'
-import { AiFillAccountBook, AiTwotonePicture } from 'react-icons/ai'
-import { BiLayerPlus, BiLayerMinus, BiDuplicate } from 'react-icons/bi'
-import { BsSquareFill } from 'react-icons/bs'
-import { CgShapeSquare, CgDropOpacity } from 'react-icons/cg'
+import { AiFillMinusSquare, AiOutlineWeiboSquare } from 'react-icons/ai'
+import { BiDuplicate } from 'react-icons/bi'
+import { BsBorderOuter, BsBack, BsFront } from 'react-icons/bs'
 import { TiDelete } from 'react-icons/ti'
 
 import {
@@ -28,38 +27,55 @@ const CanvasTopMenu = () => {
   return (
     <HStack w="full" p={2} background={'lightcoral'}>
       <HStack border={'solid 1px'} background="white" p="1">
-        <AiTwotonePicture />
-        <input ref={setBackgroundColorRef} type={'color'} />
+        <AiOutlineWeiboSquare />
+        <input
+          ref={setBackgroundColorRef}
+          type={'color'}
+          width={'24px !important'}
+        />
       </HStack>
-      <Button ref={deleteSelectionRef} background={'white'} border="solid 1px">
-        <TiDelete />
-      </Button>
+
       <HStack p="1" ref={strokeColorRef} border="solid 1px" background="white">
-        <CgShapeSquare />
-        <input type={'color'} />
+        <BsBorderOuter />
+        <input type={'color'} width={'24px !important'} />
       </HStack>
       <HStack p="1" ref={fillColorRef} border={'solid 1px'} background="white">
-        <BsSquareFill />
-        <input type={'color'} />
+        <AiFillMinusSquare />
+        <input type={'color'} width={'24px !important'} />
       </HStack>
       <Button
+        h={'39px'}
         background={'white'}
         border="solid 1px"
         ref={bringObjectForwardRef}
       >
-        <BiLayerPlus />
+        <BsFront />
       </Button>
       <Button
+        h={'39px'}
         background={'white'}
         border="solid 1px"
         ref={sendObjectBackwardRef}
       >
-        <BiLayerMinus />
+        <BsBack />
       </Button>
-      <Button background={'white'} border="solid 1px" ref={duplicateRef}>
+      <Button
+        h={'39px'}
+        background={'white'}
+        border="solid 1px"
+        ref={duplicateRef}
+      >
         <BiDuplicate />
       </Button>
       <CanvasTopMenuOpacity />
+      <Button
+        h={'39px'}
+        ref={deleteSelectionRef}
+        background={'white'}
+        border="solid 1px"
+      >
+        <TiDelete />
+      </Button>
     </HStack>
   )
 }
