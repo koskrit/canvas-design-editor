@@ -1,6 +1,6 @@
 import { Button, HStack } from '@chakra-ui/react'
 import { AiFillAccountBook, AiTwotonePicture } from 'react-icons/ai'
-import { BiLayerPlus, BiLayerMinus } from 'react-icons/bi'
+import { BiLayerPlus, BiLayerMinus, BiDuplicate } from 'react-icons/bi'
 import { BsSquareFill } from 'react-icons/bs'
 import { CgShapeSquare, CgDropOpacity } from 'react-icons/cg'
 import { TiDelete } from 'react-icons/ti'
@@ -9,6 +9,7 @@ import {
   deleteCanvasSelection,
   setCanvasBackgroundColor,
   setSelectionAttribute,
+  useDuplicateCanvasObject,
   useSetCanvasSelectionObjectLayer,
 } from 'src/plugins/fabricJSCanvas'
 
@@ -22,6 +23,7 @@ const CanvasTopMenu = () => {
   const bringObjectForwardRef = useSetCanvasSelectionObjectLayer('bringForward')
   const sendObjectBackwardRef =
     useSetCanvasSelectionObjectLayer('sendBackwards')
+  const duplicateRef = useDuplicateCanvasObject()
 
   return (
     <HStack w="full" p={2} background={'lightcoral'}>
@@ -54,7 +56,9 @@ const CanvasTopMenu = () => {
       >
         <BiLayerMinus />
       </Button>
-
+      <Button background={'white'} border="solid 1px" ref={duplicateRef}>
+        <BiDuplicate />
+      </Button>
       <CanvasTopMenuOpacity />
     </HStack>
   )

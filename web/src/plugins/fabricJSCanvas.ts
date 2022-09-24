@@ -419,6 +419,31 @@ export const useSetCanvasSelectionObjectLayer = (
   return itemRef
 }
 
+export const useDuplicateCanvasObject = () => {
+  const [fabricJSApi, setFabricJSAPi] = useGlobalState('fabricJSApi')
+  const itemRef = useRef()
+
+  useEffect(() => {
+    const { fabricJSEditor } = fabricJSApi
+
+    if (fabricJSEditor && itemRef.current) {
+      itemRef.current.onclick = () =>
+        doToSelectedObject({
+          fabricJSEditor,
+          action: (active) => {
+            const { canvas } = fabricJSEditor
+            const object = fabric.util.object.clone(active)
+            object.set('top', object.top + 5)
+            object.set('left', object.left + 5)
+            canvas.add(object)
+          },
+        })
+    }
+  }, [fabricJSApi])
+
+  return itemRef
+}
+
 interface DoToSelectionObjectParams {
   fabricJSEditor: any
   action: (active) => void
