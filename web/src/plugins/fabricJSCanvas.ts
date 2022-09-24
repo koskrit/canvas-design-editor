@@ -319,9 +319,27 @@ function setCanvasDrawCircle(canvas: any) {
 }
 
 /* -------------------------------- Top Menu -------------------------------- */
-type Attribute = 'stroke' | 'fill' | 'width' | 'height' | 'strokeWidth'
+type Attribute =
+  | 'stroke'
+  | 'fill'
+  | 'width'
+  | 'height'
+  | 'strokeWidth'
+  | 'flipX'
+  | 'flipY'
 
-export const setSelectionAttribute = (attribute: Attribute) => {
+interface SetSelectionAttributes {
+  attribute: Attribute
+  isInput: boolean
+  customValue?: any
+  isToggle?: boolean
+}
+
+export const setSelectionAttribute = (
+  setSelectionAttributes: SetSelectionAttributes
+) => {
+  let { attribute, isInput, customValue, isToggle } = setSelectionAttributes
+
   const [fabricJSApi, setFabricJSAPi] = useGlobalState('fabricJSApi')
   const itemRef = useRef()
 
@@ -330,21 +348,32 @@ export const setSelectionAttribute = (attribute: Attribute) => {
 
     const setSelectionAttributeFunc = (e) => {
       const { canvas } = fabricJSEditor
-      const value = e.target.value
+
+      let value = e.target.value
       const active = canvas.getActiveObject()
 
+      if (isToggle) {
+        const prev = active[attribute]
+        value = customValue = !prev
+      }
+
       if (active) {
-        active.set({ [attribute]: value })
+        active.set({ [attribute]: isInput ? value : customValue })
 
         if (active.type == 'activeSelection') {
-          active.getObjects().forEach((obj) => obj.set({ [attribute]: value }))
+          active
+            .getObjects()
+            .forEach((obj) =>
+              obj.set({ [attribute]: isInput ? value : customValue })
+            )
         }
         canvas.renderAll()
       }
-      fabricState.selectedObject[attribute] = value
+      fabricState.selectedObject[attribute] = isInput ? value : customValue
     }
 
-    itemRef.current.oninput = (e) => setSelectionAttributeFunc(e)
+    itemRef.current[isInput ? 'oninput' : 'onclick'] = (e) =>
+      setSelectionAttributeFunc(e)
   }, [fabricJSApi])
 
   return itemRef

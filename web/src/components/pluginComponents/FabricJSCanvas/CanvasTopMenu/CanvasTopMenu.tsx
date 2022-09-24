@@ -2,6 +2,7 @@ import { Button, HStack } from '@chakra-ui/react'
 import { AiFillMinusSquare, AiOutlineWeiboSquare } from 'react-icons/ai'
 import { BiDuplicate } from 'react-icons/bi'
 import { BsBorderOuter, BsBack, BsFront } from 'react-icons/bs'
+import { TbFlipVertical, TbFlipHorizontal } from 'react-icons/tb'
 import { TiDelete } from 'react-icons/ti'
 
 import {
@@ -17,8 +18,26 @@ import CanvasTopMenuOpacity from '../CanvasTopMenuOpacity/CanvasTopMenuOpacity'
 const CanvasTopMenu = () => {
   const setBackgroundColorRef = setCanvasBackgroundColor()
   const deleteSelectionRef = deleteCanvasSelection()
-  const fillColorRef = setSelectionAttribute('fill')
-  const strokeColorRef = setSelectionAttribute('stroke')
+  const fillColorRef = setSelectionAttribute({
+    attribute: 'fill',
+    isInput: true,
+  })
+  const strokeColorRef = setSelectionAttribute({
+    attribute: 'stroke',
+    isInput: true,
+  })
+
+  const flipX = setSelectionAttribute({
+    attribute: 'flipX',
+    isInput: false,
+    isToggle: true,
+  })
+  const flipY = setSelectionAttribute({
+    attribute: 'flipY',
+    isInput: false,
+    isToggle: true,
+  })
+
   const bringObjectForwardRef = useSetCanvasSelectionObjectLayer('bringForward')
   const sendObjectBackwardRef =
     useSetCanvasSelectionObjectLayer('sendBackwards')
@@ -68,6 +87,12 @@ const CanvasTopMenu = () => {
         <BiDuplicate />
       </Button>
       <CanvasTopMenuOpacity />
+      <Button h={'39px'} ref={flipX} background={'white'} border="solid 1px">
+        <TbFlipHorizontal />
+      </Button>
+      <Button h={'39px'} ref={flipY} background={'white'} border="solid 1px">
+        <TbFlipVertical />
+      </Button>
       <Button
         h={'39px'}
         ref={deleteSelectionRef}
