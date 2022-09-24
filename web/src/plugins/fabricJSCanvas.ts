@@ -395,32 +395,28 @@ type LayerDirection =
   | 'bringForward'
   | 'bringToFront'
 
-export const useBringCanvasObjectTo = () => {
+export const useSetCanvasSelectionObjectLayer = (
+  layerDirection: LayerDirection
+) => {
   const [fabricJSApi, setFabricJSAPi] = useGlobalState('fabricJSApi')
-  const fabricJSEditorRef = useRef()
+  const itemRef = useRef()
 
   useEffect(() => {
     const { fabricJSEditor } = fabricJSApi
 
-    if (fabricJSEditor) {
-      fabricJSEditorRef.current = fabricJSEditor
+    if (fabricJSEditor && itemRef.current) {
+      itemRef.current.onclick = () =>
+        doToSelectedObject({
+          fabricJSEditor,
+          action: (active) => {
+            const { canvas } = fabricJSEditor
+            canvas[layerDirection](active)
+          },
+        })
     }
   }, [fabricJSApi])
 
-  return (layerDirection: LayerDirection) => {
-    if (fabricJSEditorRef.current) {
-      const fabricJSEditor = fabricJSEditorRef.current
-
-      doToSelectedObject({
-        fabricJSEditor,
-
-        action: (active) => {
-          const { canvas } = fabricJSEditor
-          canvas[layerDirection](active)
-        },
-      })
-    }
-  }
+  return itemRef
 }
 
 interface DoToSelectionObjectParams {

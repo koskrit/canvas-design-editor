@@ -9,7 +9,7 @@ import {
   deleteCanvasSelection,
   setCanvasBackgroundColor,
   setSelectionAttribute,
-  useBringCanvasObjectTo,
+  useSetCanvasSelectionObjectLayer,
 } from 'src/plugins/fabricJSCanvas'
 
 import CanvasTopMenuOpacity from '../CanvasTopMenuOpacity/CanvasTopMenuOpacity'
@@ -19,7 +19,9 @@ const CanvasTopMenu = () => {
   const deleteSelectionRef = deleteCanvasSelection()
   const fillColorRef = setSelectionAttribute('fill')
   const strokeColorRef = setSelectionAttribute('stroke')
-  const bringObjectTo = useBringCanvasObjectTo()
+  const bringObjectForwardRef = useSetCanvasSelectionObjectLayer('bringForward')
+  const sendObjectBackwardRef =
+    useSetCanvasSelectionObjectLayer('sendBackwards')
 
   return (
     <HStack w="full" p={2} background={'lightcoral'}>
@@ -41,14 +43,14 @@ const CanvasTopMenu = () => {
       <Button
         background={'white'}
         border="solid 1px"
-        onClick={() => bringObjectTo('bringForward')}
+        ref={bringObjectForwardRef}
       >
         <BiLayerPlus />
       </Button>
       <Button
         background={'white'}
         border="solid 1px"
-        onClick={() => bringObjectTo('sendBackwards')}
+        ref={sendObjectBackwardRef}
       >
         <BiLayerMinus />
       </Button>
