@@ -41,6 +41,7 @@ export function useSetupCanvas() {
     if (shouldRender && editor) {
       setFabricJSAPi({ fabricJSEditor: editor })
       setShouldRender(false)
+      editor.canvas.preserveObjectStacking = true
     }
   }, [editor])
 

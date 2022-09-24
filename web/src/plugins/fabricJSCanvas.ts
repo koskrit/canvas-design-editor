@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 
 import { fabric } from 'fabric'
+import { useFabricJSEditor } from 'fabricjs-react'
 
 import FabricCanvas from 'src/components/pluginComponents/FabricJSCanvas/FabricCanvas/FabricCanvas'
 import useGlobalState from 'src/contexts/initialization'
@@ -357,18 +358,17 @@ export const useSetCanvasActiveOpacity = (sliderValue: any) => {
     const { fabricJSEditor } = fabricJSApi
 
     if (fabricJSEditor) {
-      const { canvas } = fabricJSEditor
-      const active = canvas.getActiveObject()
       const opacity = sliderValue / 100
 
-      if (active) {
-        active.opacity = opacity
-        objRef.current = active
-        if (active.type == 'activeSelection') {
-          active.getObjects().forEach((obj) => (obj.opacity = opacity))
-        }
-        canvas.renderAll()
-      }
+      doToSelectedObject({
+        fabricJSEditor,
+        action: (active) => {
+          active.opacity = opacity
+          if (active.type === 'activeSelection') {
+            objRef.current = active
+          }
+        },
+      })
     }
   }, [fabricJSApi, sliderValue])
   return objRef
@@ -387,4 +387,60 @@ export const getCanvasObject = () => {
     }
   }, [fabricJSApi])
   return objRef
+}
+
+type LayerDirection =
+  | 'sendBackwards'
+  | 'sendToBack'
+  | 'bringForward'
+  | 'bringToFront'
+
+export const useBringCanvasObjectTo = () => {
+  const [fabricJSApi, setFabricJSAPi] = useGlobalState('fabricJSApi')
+  const fabricJSEditorRef = useRef()
+
+  useEffect(() => {
+    const { fabricJSEditor } = fabricJSApi
+
+    if (fabricJSEditor) {
+      fabricJSEditorRef.current = fabricJSEditor
+    }
+  }, [fabricJSApi])
+
+  return (layerDirection: LayerDirection) => {
+    if (fabricJSEditorRef.current) {
+      const fabricJSEditor = fabricJSEditorRef.current
+
+      doToSelectedObject({
+        fabricJSEditor,
+
+        action: (active) => {
+          const { canvas } = fabricJSEditor
+          canvas[layerDirection](active)
+        },
+      })
+    }
+  }
+}
+
+interface DoToSelectionObjectParams {
+  fabricJSEditor: any
+  action: (active) => void
+}
+
+function doToSelectedObject(
+  doToSelectionObjectParams: DoToSelectionObjectParams
+) {
+  const { fabricJSEditor, action } = doToSelectionObjectParams
+
+  const { canvas } = fabricJSEditor
+  const active = canvas.getActiveObject()
+
+  if (active) {
+    action(active)
+    if (active.type == 'activeSelection') {
+      active.getObjects().forEach((obj) => action(active))
+    }
+    canvas.renderAll()
+  }
 }

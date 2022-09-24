@@ -1,5 +1,6 @@
 import { Button, HStack } from '@chakra-ui/react'
 import { AiFillAccountBook, AiTwotonePicture } from 'react-icons/ai'
+import { BiLayerPlus, BiLayerMinus } from 'react-icons/bi'
 import { BsSquareFill } from 'react-icons/bs'
 import { CgShapeSquare, CgDropOpacity } from 'react-icons/cg'
 import { TiDelete } from 'react-icons/ti'
@@ -8,6 +9,7 @@ import {
   deleteCanvasSelection,
   setCanvasBackgroundColor,
   setSelectionAttribute,
+  useBringCanvasObjectTo,
 } from 'src/plugins/fabricJSCanvas'
 
 import CanvasTopMenuOpacity from '../CanvasTopMenuOpacity/CanvasTopMenuOpacity'
@@ -17,6 +19,7 @@ const CanvasTopMenu = () => {
   const deleteSelectionRef = deleteCanvasSelection()
   const fillColorRef = setSelectionAttribute('fill')
   const strokeColorRef = setSelectionAttribute('stroke')
+  const bringObjectTo = useBringCanvasObjectTo()
 
   return (
     <HStack w="full" p={2} background={'lightcoral'}>
@@ -35,6 +38,21 @@ const CanvasTopMenu = () => {
         <BsSquareFill />
         <input type={'color'} />
       </HStack>
+      <Button
+        background={'white'}
+        border="solid 1px"
+        onClick={() => bringObjectTo('bringForward')}
+      >
+        <BiLayerPlus />
+      </Button>
+      <Button
+        background={'white'}
+        border="solid 1px"
+        onClick={() => bringObjectTo('sendBackwards')}
+      >
+        <BiLayerMinus />
+      </Button>
+
       <CanvasTopMenuOpacity />
     </HStack>
   )
