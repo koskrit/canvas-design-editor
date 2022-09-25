@@ -47,7 +47,11 @@ export const Success = (data: CellSuccessProps<ProjectsQuery>) => {
             key={item.Id}
             activeClassName={'project-link'}
             onClick={() => setCurrentProject(item)}
-            to={routes.project({ id: item.Id })}
+            to={routes.project({
+              Id: item.Id,
+              Name: item.Name,
+              Slug: item.Id,
+            })}
           >
             <ProjectItem projectInfo={item} />
           </NavLink>

@@ -3,8 +3,13 @@ import { useEffect, useRef } from 'react'
 import { fabric } from 'fabric'
 import { useFabricJSEditor } from 'fabricjs-react'
 
+import { useAuth } from '@redwoodjs/auth'
+
 import FabricCanvas from 'src/components/pluginComponents/FabricJSCanvas/FabricCanvas/FabricCanvas'
+import { Project } from 'src/contexts/currentProject'
 import useGlobalState from 'src/contexts/initialization'
+
+import { uploadImage } from './filestackImage'
 
 export { FabricCanvas, fabric }
 
@@ -23,10 +28,14 @@ export const addImageListener = (ImageUrl: string) => {
     const { fabricJSEditor } = fabricJSApi
 
     const addImageFunc = (ImageUrl: string) => {
-      fabric.Image.fromURL(ImageUrl, function (oImg) {
-        console.log(oImg)
-        fabricJSEditor?.canvas.add(oImg)
-      })
+      fabric.Image.fromURL(
+        ImageUrl,
+        function (oImg) {
+          console.log(oImg)
+          fabricJSEditor?.canvas.add(oImg)
+        },
+        { crossOrigin: 'Anonymous' }
+      )
       console.log({ fabricJSEditor })
     }
 
@@ -493,4 +502,94 @@ function doToSelectedObject(
     }
     canvas.renderAll()
   }
+}
+
+// fix undefined values
+export const useSaveCanvasToState = () => {
+  const [currentProject, setCurrentProject] = useGlobalState('currentProject')
+  const { currentUser } = useAuth()
+
+  const [fabricJSApi, setFabricJSAPi] = useGlobalState('fabricJSApi')
+
+  const { fabricJSEditor } = fabricJSApi
+
+  return async () => {
+    if (!fabricJSEditor) return false
+
+    const canvasDataArr = extractCanvasData(fabricJSEditor)
+    const urlParams = new URLSearchParams(document.location.href.split('?')[1])
+    const urlParamsArr = []
+    const userId = {
+      key: 'useId',
+      value: currentUser.sub,
+    }
+
+    urlParams.forEach((value, key) => urlParamsArr.push({ value, key }))
+
+    const projectStateProperties = [...canvasDataArr, ...urlParamsArr, userId]
+
+    const projectState = {} as Project
+    projectStateProperties.forEach(
+      ({ value, key }) => (projectState[key] = value)
+    )
+
+    const { canvas } = fabricJSEditor
+
+    const imageData = canvas.toDataURL()
+    const previewImageUrl = await uploadImage(imageData)
+    projectState.PreviewImage = previewImageUrl
+
+    console.log({ projectState })
+    setCurrentProject(projectState)
+  }
+}
+
+interface DownloadOptions {
+  format: 'jpg' | 'png'
+  quality: number
+}
+
+// see if filestack uploaded image number matters after month passed
+
+export const downloadCanvasAsImage = (downloadOptions: DownloadOptions) => {
+  // const { format, quality } = downloadOptions
+
+  const [fabricJSApi, setFabricJSAPi] = useGlobalState('fabricJSApi')
+  const itemRef = useRef()
+
+  useEffect(() => {
+    const { fabricJSEditor } = fabricJSApi
+
+    if (fabricJSEditor && itemRef.current) {
+      const { canvas } = fabricJSEditor
+      itemRef.current.onclick = () => {
+        const anchor = document.createElement('a')
+
+        anchor.href = canvas.toDataURL('image/png')
+        anchor.download = 'IMAGE.PNG'
+        anchor.click()
+      }
+    }
+  }, [fabricJSApi])
+
+  return itemRef
+}
+
+function extractCanvasData(fabricJSEditor: any): any[] {
+  const { canvas } = fabricJSEditor
+  const canvasDataArr = []
+
+  if (!canvas) return false
+  canvasDataArr.push({ key: 'Height', value: canvas.height })
+  canvasDataArr.push({ key: 'Width', value: canvas.width })
+  canvasDataArr.push({
+    key: 'BackgroundColor',
+    value: canvas.backgroundColor || '#fff',
+  })
+  canvasDataArr.push({
+    key: 'Serialization',
+    value: JSON.stringify(canvas.toJSON('image/png')),
+  })
+
+  return canvasDataArr
 }

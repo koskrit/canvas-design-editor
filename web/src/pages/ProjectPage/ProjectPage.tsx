@@ -42,7 +42,7 @@ const ProjectPage = () => {
               <FilestackWidget />
               {uploadedImagesRender && (
                 <UploadedImagesCell
-                  userId={currentUser.sub}
+                  userId={currentUser?.sub}
                   type={'Image'}
                   uploadedImagesRender={uploadedImagesRender}
                 />

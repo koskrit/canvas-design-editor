@@ -29,14 +29,14 @@ export const createProject: MutationResolvers['createProject'] = ({
 }
 
 export const updateProject: MutationResolvers['updateProject'] = ({
-  id,
+  id: Id,
   input,
 }) => {
-  input.updatedAt = new Date()
+  input.ModifiedDate = new Date()
 
   return db.project.update({
     data: input,
-    where: { id },
+    where: { Id },
   })
 }
 

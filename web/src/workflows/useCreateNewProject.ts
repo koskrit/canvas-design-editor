@@ -61,7 +61,13 @@ export default function useCreateNewProject() {
       variables: { ...projectData },
     })
 
-    navigate(routes.project({ id: projectData.Id }))
+    navigate(
+      routes.project({
+        Id: projectData.Id,
+        Name: projectData.Name,
+        Slug: projectData.Id,
+      })
+    )
   }
 
   function fillEmptyFields(projectData: Project) {
