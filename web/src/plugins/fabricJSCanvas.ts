@@ -9,6 +9,7 @@ import FabricCanvas from 'src/components/pluginComponents/FabricJSCanvas/FabricC
 import { Project } from 'src/contexts/currentProject'
 import useGlobalState from 'src/contexts/initialization'
 
+import { uploadImageCloudinary } from './cloudinaryUploader'
 import { uploadImage } from './filestackImage'
 
 export { FabricCanvas, fabric }
@@ -520,7 +521,7 @@ export const useSaveCanvasToState = () => {
     const urlParams = new URLSearchParams(document.location.href.split('?')[1])
     const urlParamsArr = []
     const userId = {
-      key: 'useId',
+      key: 'userId',
       value: currentUser.sub,
     }
 
@@ -536,11 +537,14 @@ export const useSaveCanvasToState = () => {
     const { canvas } = fabricJSEditor
 
     const imageData = canvas.toDataURL()
-    const previewImageUrl = await uploadImage(imageData)
+    const previewImageUrl = await uploadImageCloudinary(imageData)
+
     projectState.PreviewImage = previewImageUrl
 
-    console.log({ projectState })
+    console.log({ currentProject, projectState })
     setCurrentProject(projectState)
+
+    return projectState
   }
 }
 

@@ -1,12 +1,13 @@
 import { useEffect, useRef } from 'react'
 
+import { useApolloClient } from '@apollo/client'
 import { gql } from '@apollo/client'
 
 import useGlobalState from 'src/contexts/initialization'
 
 import { useSaveCanvasToState } from './../plugins/fabricJSCanvas'
 
-const updateGQLString = gql`
+const graphQLString = gql`
   mutation UpdateProject(
     $Id: String!
     $userId: String!
@@ -43,13 +44,22 @@ const useSaveProject = () => {
   const [currentProject, setCurrentProject] = useGlobalState('currentProject')
   const [fabricJSApi, setFabricJSApi] = useGlobalState('fabricJSApi')
   const saveCanvasToState = useSaveCanvasToState()
+  const apolloClient = useApolloClient()
 
   const itemRef = useRef()
 
   useEffect(() => {
     const { fabricJSEditor } = fabricJSApi
     if (itemRef.current && fabricJSEditor) {
-      itemRef.current.onclick = saveCanvasToState
+      itemRef.current.onclick = async () => {
+        const projectData = await saveCanvasToState()
+
+        const res = await apolloClient.mutate({
+          mutation: graphQLString,
+          variables: { ...projectData },
+        })
+        console.log({ res })
+      }
     }
   }, [fabricJSApi])
 

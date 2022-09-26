@@ -17,7 +17,7 @@ export const deleteUploadedImage = async (imgUrl: string) => {
   return response
 }
 
-export const uploadImage = async (dataUrl: string) => {
+export const uploadImage = async (dataUrl: string, previousImage: string) => {
   console.log(process.env.FILESTACK_API_KEY, 'key')
 
   const client = filestackClient.init(process.env.FILESTACK_API_KEY)
@@ -34,10 +34,6 @@ export const uploadImage = async (dataUrl: string) => {
     }
   )
   console.log({ response })
-
-  if (response.url) {
-    deleteUploadedImage(response.url)
-  }
 
   return response?.url
 }
