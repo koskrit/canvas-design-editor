@@ -66,6 +66,7 @@ export default function useCreateNewProject() {
         Id: projectData.Id,
         Name: projectData.Name,
         Slug: projectData.Id,
+        Serialization: projectData.Serialization,
       })
     )
   }

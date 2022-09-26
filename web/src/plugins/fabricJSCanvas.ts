@@ -579,6 +579,30 @@ export const downloadCanvasAsImage = (downloadOptions: DownloadOptions) => {
   return itemRef
 }
 
+export const useLoadCanvasProject = () => {
+  const [fabricJSApi, setFabricJSAPi] = useGlobalState('fabricJSApi')
+  const [currentProject, setCurrentProject] = useGlobalState('currentProject')
+
+  useEffect(() => {
+    console.log({ currentProject, fabricJSApi })
+
+    const { fabricJSEditor } = fabricJSApi
+    if (fabricJSEditor) {
+      const { canvas } = fabricJSEditor
+      let serialization
+
+      if (currentProject?.Serialization > 15) {
+        serialization = currentProject.Serialization
+      } else {
+        const urlParams = new URLSearchParams(document.location.href)
+        serialization = urlParams.get('Serialization')
+      }
+
+      canvas.loadFromJSON(serialization)
+    }
+  }, [fabricJSApi])
+}
+
 function extractCanvasData(fabricJSEditor: any): any[] {
   const { canvas } = fabricJSEditor
   const canvasDataArr = []

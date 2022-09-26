@@ -51,6 +51,7 @@ export const Success = (data: CellSuccessProps<ProjectsQuery>) => {
               Id: item.Id,
               Name: item.Name,
               Slug: item.Id,
+              Serialization: item.Serialization,
             })}
           >
             <ProjectItem projectInfo={item} />

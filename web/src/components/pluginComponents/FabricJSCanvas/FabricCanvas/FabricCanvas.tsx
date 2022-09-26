@@ -10,7 +10,7 @@ import { Center, Container, chakra, Box } from '@chakra-ui/react'
 import { useFabricJSEditor, FabricJSCanvas } from 'fabricjs-react'
 
 import useGlobalState from 'src/contexts/initialization'
-import { fabric } from 'src/plugins/fabricJSCanvas'
+import { fabric, useLoadCanvasProject } from 'src/plugins/fabricJSCanvas'
 
 const FabricCanvas = () => {
   const { onReady } = useSetupCanvas()
@@ -36,6 +36,7 @@ export function useSetupCanvas() {
   const [shouldRender, setShouldRender] = useState(true)
 
   useSetCanvasLayout()
+  useLoadCanvasProject()
 
   useEffect(() => {
     if (shouldRender && editor) {
