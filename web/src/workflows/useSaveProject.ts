@@ -53,6 +53,7 @@ const useSaveProject = () => {
     if (itemRef.current && fabricJSEditor) {
       itemRef.current.onclick = async () => {
         const projectData = await saveCanvasToState()
+        setUrlParams(projectData)
 
         const res = await apolloClient.mutate({
           mutation: graphQLString,
@@ -64,6 +65,24 @@ const useSaveProject = () => {
   }, [fabricJSApi])
 
   return itemRef
+}
+
+function setUrlParams(projectData) {
+  // find a way to store params at refresh at url
+  const { Serialization } = projectData
+
+  const urlParams = new URLSearchParams(document.location.href.split('?')[1])
+  const Name = urlParams.get('Name')
+  const Slug = urlParams.get('Slug')
+  const Id = urlParams.get('Id')
+
+  console.log({ Serialization })
+
+  window.history.replaceState(
+    null,
+    null,
+    `?Id=${Id}&Name=${Name}&Slug=${Slug}&Serialization=${Serialization}`
+  )
 }
 
 export default useSaveProject

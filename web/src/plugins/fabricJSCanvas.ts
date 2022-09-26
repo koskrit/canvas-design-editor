@@ -527,12 +527,13 @@ export const useSaveCanvasToState = () => {
 
     urlParams.forEach((value, key) => urlParamsArr.push({ value, key }))
 
-    const projectStateProperties = [...canvasDataArr, ...urlParamsArr, userId]
+    const projectStateProperties = [...urlParamsArr, ...canvasDataArr, userId]
 
     const projectState = {} as Project
     projectStateProperties.forEach(
       ({ value, key }) => (projectState[key] = value)
     )
+    console.log({ projectState })
 
     const { canvas } = fabricJSEditor
 
@@ -541,8 +542,8 @@ export const useSaveCanvasToState = () => {
 
     projectState.PreviewImage = previewImageUrl
 
-    console.log({ currentProject, projectState })
     setCurrentProject(projectState)
+    console.log({ currentProject, projectState })
 
     return projectState
   }
@@ -591,7 +592,8 @@ export const useLoadCanvasProject = () => {
       const { canvas } = fabricJSEditor
       let serialization
 
-      if (currentProject?.Serialization > 15) {
+      if (currentProject?.Serialization?.length > 25) {
+        alert(currentProject.Serialization)
         serialization = currentProject.Serialization
       } else {
         const urlParams = new URLSearchParams(document.location.href)
@@ -618,6 +620,7 @@ function extractCanvasData(fabricJSEditor: any): any[] {
     key: 'Serialization',
     value: JSON.stringify(canvas.toJSON('image/png')),
   })
+  console.log({ canvasDataArr }, '1')
 
   return canvasDataArr
 }
