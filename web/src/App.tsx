@@ -10,6 +10,7 @@ import { RedwoodApolloProvider } from '@redwoodjs/web/apollo'
 import FatalErrorPage from 'src/pages/FatalErrorPage'
 import Routes from 'src/Routes'
 
+import { NotificationContainer } from './plugins/notifications'
 import './index.css'
 
 const extendedTheme = extendTheme(theme)
@@ -23,6 +24,7 @@ const App = () => (
         <ColorModeScript />
         <ChakraProvider theme={extendedTheme}>
           <RedwoodApolloProvider>
+            <NotificationContainer />
             <Routes />
           </RedwoodApolloProvider>
         </ChakraProvider>
