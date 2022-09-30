@@ -10,7 +10,11 @@ import { Center, Container, chakra, Box } from '@chakra-ui/react'
 import { useFabricJSEditor, FabricJSCanvas } from 'fabricjs-react'
 
 import useGlobalState from 'src/contexts/initialization'
-import { fabric, useLoadCanvasProject } from 'src/plugins/fabricJSCanvas'
+import {
+  extractUrlParams,
+  fabric,
+  useLoadCanvasProject,
+} from 'src/plugins/fabricJSCanvas'
 
 const FabricCanvas = () => {
   const { onReady } = useSetupCanvas()
@@ -51,16 +55,19 @@ export function useSetupCanvas() {
 
 const useSetCanvasLayout = () => {
   const [currentProject, setCurrentProject] = useGlobalState('currentProject')
+  const { Height, Width } = extractUrlParams()
 
   useLayoutEffect(() => {
+    console.log({ currentProject, Height, Width })
+
     const canvas = document.querySelector('.main-canvas')
 
     canvas.style.height = currentProject?.Height
       ? `${currentProject?.Height}px`
-      : '500px'
+      : `${Height}px` || '500px'
     canvas.style.width = currentProject?.Width
       ? `${currentProject?.Width}px`
-      : '1000px'
+      : `${Width}px` || '1000px'
 
     canvas.style.background = currentProject.BackgroundColor || 'white'
   }, [])

@@ -533,8 +533,6 @@ export const useSaveCanvasToState = () => {
     projectStateProperties.forEach(
       ({ value, key }) => (projectState[key] = value)
     )
-    console.log({ projectState })
-
     const { canvas } = fabricJSEditor
 
     const imageData = canvas.toDataURL()
@@ -593,14 +591,18 @@ export const useLoadCanvasProject = () => {
       let serialization
 
       if (currentProject?.Serialization?.length > 25) {
-        alert(currentProject.Serialization)
-        serialization = currentProject.Serialization
+        const canvasData = extractUrlParams()
+        loadCanvasState(canvasData, canvas)
+        // serialization = currentProject.Serialization
       } else {
-        const urlParams = new URLSearchParams(document.location.href)
-        serialization = urlParams.get('Serialization')
+        const canvasData = extractUrlParams()
+        loadCanvasState(canvasData, canvas)
       }
-
-      canvas.loadFromJSON(serialization)
+      if (serialization > 25) {
+        // canvas.loadFromJSON(serialization)
+        const canvasData = extractUrlParams()
+        loadCanvasState(canvasData, canvas)
+      }
     }
   }, [fabricJSApi])
 }
@@ -623,4 +625,25 @@ function extractCanvasData(fabricJSEditor: any): any[] {
   console.log({ canvasDataArr }, '1')
 
   return canvasDataArr
+}
+
+export function extractUrlParams() {
+  const urlParams = new URLSearchParams(document.location.href.split('?')[1])
+  const Serialization = urlParams.get('Serialization')
+  const Width = urlParams.get('Width') - 0
+  const Height = urlParams.get('Height') - 0
+
+  return { Serialization, Width, Height }
+}
+
+interface CanvasData {
+  Width: string
+  Height: string
+  Serialization: string
+}
+function loadCanvasState(canvasData: CanvasData, canvas: any) {
+  const { Width, Height, Serialization } = canvasData
+  canvas.width = Width
+  canvas.height = Height
+  canvas.loadFromJSON(Serialization)
 }

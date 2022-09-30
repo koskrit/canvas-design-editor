@@ -1,8 +1,10 @@
 import 'react-notifications/lib/notifications.css'
 import { NotificationContainer, NotificationManager } from 'react-notifications'
 
+type notificationType = 'info' | 'success' | 'warning' | 'error'
+
 function notify(
-  type: string,
+  type: notificationType,
   message: string,
   duration?: number,
   callback?: () => void

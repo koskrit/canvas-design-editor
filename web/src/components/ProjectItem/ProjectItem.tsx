@@ -18,10 +18,11 @@ const ProjectItem = ({ projectInfo }: Props) => {
   }
 
   return (
-    <VStack m={5} p={2} background="lightblue" w={'3xs'} h={'auto'}>
+    <VStack m={5} p={2} background="lightblue" w={'3xs'} h="3xs">
       <Image
         src={projectInfo.PreviewImage || 'defaults/preview-project.png'}
         alt={projectInfo.Name}
+        h="80%"
       />
       <Text>{projectInfo.Name}</Text>
     </VStack>
