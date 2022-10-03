@@ -645,5 +645,7 @@ function loadCanvasState(canvasData: CanvasData, canvas: any) {
   const { Width, Height, Serialization } = canvasData
   canvas.width = Width
   canvas.height = Height
-  canvas.loadFromJSON(Serialization)
+  if (canvasData?.Serialization !== 'serialization') {
+    canvas.loadFromJSON(Serialization)
+  }
 }
