@@ -40,9 +40,11 @@ export const updateProject: MutationResolvers['updateProject'] = ({
   })
 }
 
-export const deleteProject: MutationResolvers['deleteProject'] = ({ id }) => {
+export const deleteProject: MutationResolvers['deleteProject'] = ({
+  id: Id,
+}) => {
   return db.project.delete({
-    where: { id },
+    where: { Id },
   })
 }
 
