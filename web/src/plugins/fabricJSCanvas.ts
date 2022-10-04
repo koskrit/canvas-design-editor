@@ -632,8 +632,9 @@ export function extractUrlParams() {
   const Serialization = urlParams.get('Serialization')
   const Width = urlParams.get('Width') - 0
   const Height = urlParams.get('Height') - 0
+  const Id = urlParams.get('Id')
 
-  return { Serialization, Width, Height }
+  return { Serialization, Width, Height, Id }
 }
 
 interface CanvasData {

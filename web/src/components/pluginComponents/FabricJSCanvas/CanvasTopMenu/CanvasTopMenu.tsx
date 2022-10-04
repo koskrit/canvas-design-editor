@@ -13,15 +13,14 @@ import { TiDelete } from 'react-icons/ti'
 
 import {
   deleteCanvasSelection,
-  downloadCanvasAsImage,
   setCanvasBackgroundColor,
   setSelectionAttribute,
   useDuplicateCanvasObject,
   useSetCanvasSelectionObjectLayer,
 } from 'src/plugins/fabricJSCanvas'
-import useSaveProject from 'src/workflows/useSaveProject'
 
 import CanvasTopMenuOpacity from '../CanvasTopMenuOpacity/CanvasTopMenuOpacity'
+import CanvasTopMenuSaves from '../CanvasTopMenuSaves/CanvasTopMenuSaves'
 
 const CanvasTopMenu = () => {
   const setBackgroundColorRef = setCanvasBackgroundColor()
@@ -50,9 +49,6 @@ const CanvasTopMenu = () => {
   const sendObjectBackwardRef =
     useSetCanvasSelectionObjectLayer('sendBackwards')
   const duplicateRef = useDuplicateCanvasObject()
-
-  const saveProjectRef = useSaveProject()
-  const downloadImageRef = downloadCanvasAsImage()
 
   return (
     <HStack
@@ -132,14 +128,7 @@ const CanvasTopMenu = () => {
         </Button>
       </HStack>
       <HStack>
-        <Button ref={downloadImageRef}>
-          <BsDownload />
-          &nbsp; Download
-        </Button>
-        <Button background={'lightgreen'} ref={saveProjectRef}>
-          <BsSave />
-          &nbsp; Save
-        </Button>
+        <CanvasTopMenuSaves />
       </HStack>
     </HStack>
   )
