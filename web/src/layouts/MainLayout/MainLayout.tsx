@@ -27,6 +27,7 @@ import { BsFillCameraVideoFill } from 'react-icons/bs'
 import { useAuth } from '@redwoodjs/auth'
 
 import CreateProjectModal from 'src/components/CreateProjectModal/CreateProjectModal'
+import useGlobalState from 'src/contexts/initialization'
 import useNetlifyWidget from 'src/plugins/netlifyAuth'
 
 type MainLayoutProps = {
@@ -36,6 +37,9 @@ type MainLayoutProps = {
 export default function MainLayout({ children }: MainLayoutProps) {
   const bg = useColorModeValue('white', 'gray.800')
   const mobileNav = useDisclosure()
+  const [projectDeleteMode, setProjectDeleteMode] = useGlobalState(
+    'isDashboardDeleteMode'
+  )
 
   const netlifyIdentityWidget = useNetlifyWidget()
 
@@ -141,6 +145,12 @@ export default function MainLayout({ children }: MainLayoutProps) {
             display={mobileNav.isOpen ? 'none' : 'flex'}
             alignItems="center"
           >
+            <Button
+              background={'tomato'}
+              onClick={() => setProjectDeleteMode(!projectDeleteMode)}
+            >
+              Delete Project
+            </Button>
             <CreateProjectModal />
             <Center>
               <Avatar
