@@ -15,9 +15,11 @@ To run the Canvas Editor App, follow these steps:
 3. Run a local server or use a tool like Live Server to view the app in the browser
 
 ## Technologies Used
-- HTML5
-- CSS3
-- JavaScript
+- Redwood.js
+- React.js
+- Jest
+- GraphQL
+- StoryBook
 - Fabric.js
 
 ## Contributing
