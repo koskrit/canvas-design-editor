@@ -24,6 +24,3 @@ To run the Canvas Editor App, follow these steps:
 
 ## Contributing
 Feel free to contribute to this project by forking the repository and creating a pull request with your changes.
-
-## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
